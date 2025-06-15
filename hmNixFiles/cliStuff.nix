@@ -8,17 +8,23 @@
     zoxide
     fzf
     yazi
-  ];
-
-  # things that should be added to $PATH
-  home.sessionPath = [
-    "$HOME/.cargo/bin"
+    direnv
+    devenv
   ];
 
   home.shell.enableFishIntegration = true;
   programs.fish = {
     enable = true;
-    interactiveShellInit = ''set fish_greeting'';
+    interactiveShellInit = ''
+      set fish_greeting
+      function nish
+        begin
+          set -l pkg $argv[1]
+          set -lx NIXPKGS_ALLOW_UNFREE 1
+          command nix shell --impure "nixpkgs#$pkg"
+        end
+      end
+    '';
     preferAbbrs = false;
     shellAliases = {
       cat = "bat";
@@ -27,6 +33,8 @@
       nrbs = "sudo nixos-rebuild switch --flake ~/nixConfig";
       nfu = "nix flake update --flake ~/nixConfig";
       udrbsd = "nix flake update --flake ~/nixConfig && sudo nixos-rebuild switch --flake ~/nixConfig && sudo shutdown now";
+      grb = "sudo nix-collect-garbage --delete-old && nix-collect-garbage --delete-old";
+      newProj = "nix flake init -t github:mochienya/nix-dev-template";
     };
     plugins = with pkgs.fishPlugins; [
       {
@@ -35,11 +43,19 @@
       }
     ];
   };
+  
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    config.whitelist = {
+      prefix = ["~/proj/"];
+    };
+  };
 
   programs.kitty = {
     enable = true;
     font = {
-      name = "Iosevka Custom";
+      name = "Mochie Iosevka";
       size = 16;
     };
     settings = {
