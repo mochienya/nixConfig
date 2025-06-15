@@ -74,6 +74,7 @@ extras@{ pkgs, ... }:
     kdePackages.discover
     signal-desktop-bin
     rar
+    wl-clipboard-rs
   ];
 
   system.stateVersion = "25.05";

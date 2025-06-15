@@ -2,14 +2,15 @@ extras@{ pkgs, ... }:
 {
   home.packages = with pkgs; [
     github-desktop
-    devenv
-    direnv
     zed-editor
     micro
     vscode
     nixd
-    rustup
+    pkg-config
+    openssl
+    cmake
     gcc
+    gnumake
     glibc
     pnpm
     nodejs_24

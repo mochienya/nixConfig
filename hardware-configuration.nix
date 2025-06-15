@@ -61,6 +61,7 @@
   };
 
   networking.useDHCP = lib.mkDefault true;
+  networking.interfaces.enp9s0.wakeOnLan.enable = true;
 
   # not too fond of green gpu
   hardware.graphics.enable = true;
@@ -69,7 +70,7 @@
     modesetting.enable = true;
     powerManagement.enable = true;
     powerManagement.finegrained = false;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.production;
     open = false;
   };
 }
