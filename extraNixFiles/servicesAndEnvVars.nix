@@ -10,6 +10,6 @@
   programs.ssh.startAgent = true;
 
   programs.fish.enable = true;
-  
+
   hardware.bluetooth.enable = true;
 }

@@ -49,10 +49,8 @@
         "dmask=0077"
       ];
     };
-    
+
   };
-
-
 
   swapDevices = [ ];
   zramSwap = {
