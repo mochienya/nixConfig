@@ -1,30 +1,36 @@
 { pkgs, ... }:
 let
-  auto_sub = pkgs.mpvScripts.buildLua {
-    pname = "auto_sub";
-    src = pkgs.writeTextFile {
-      name = "auto_sub.lua";
-      text = ''
+  auto-sub =
+    let
+      file = builtins.toFile "auto-sub.lua" ''
         mp.add_hook('on_load', 10, function ()
            mp.set_property('sub-file-paths', 'Subs/' .. mp.get_property('filename/no-ext'))
         end)
       '';
+    in
+    pkgs.mpvScripts.buildLua {
+      pname = "auto-sub";
+      version = "1.0.0";
+      src = file;
+      unpackPhase = ":";
+      scriptPath = file;
     };
-  };
-  seek_end = pkgs.mpvScripts.buildLua {
-    pname = "seek_end";
-    src = pkgs.writeTextFile {
-      name = "seek_end.lua";
-      text = ''
-        mp.register_script_message("seek_end", function()
-           local duration = mp.get_property_number("duration")
-           if duration then
-              mp.commandv("seek", duration - 5, "absolute")
-           end
-        end)
+  seek-end =
+    let
+      file = builtins.toFile "seek-end.lua" ''
+        function seek_end()
+          mp.set_property("time-pos", mp.get_property_native("duration") - 5)
+        end
+        mp.add_key_binding("y", "seek_end", seek_end)
       '';
+    in
+    pkgs.mpvScripts.buildLua {
+      pname = "seek-end";
+      version = "1.0.0";
+      src = file;
+      unpackPhase = ":";
+      scriptPath = file;
     };
-  };
 in
 {
   programs.mpv = {
@@ -59,7 +65,7 @@ in
       WHEEL_DOWN = "add volume -2";
       j = "add chapter -1";
       l = "add chapter 1";
-      y = "script-binding seek_end";
+      y = "script-binding seek-end";
       "`" = "script-binding console/enable";
     };
     scripts =
@@ -69,8 +75,8 @@ in
         thumbfast
       ]
       ++ [
-        seek_end
-        auto_sub
+        seek-end
+        auto-sub
       ];
   };
 }
