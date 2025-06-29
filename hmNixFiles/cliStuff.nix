@@ -27,14 +27,13 @@
     '';
     preferAbbrs = false;
     shellAliases = {
-      cat = "bat";
       ls = "eza -1 -l -a -F --color=always --icons --no-permissions --no-user --no-time";
       nano = "micro";
       nrbs = "sudo nixos-rebuild switch --flake ~/nixConfig";
       nfu = "nix flake update --flake ~/nixConfig";
       udrbsd = "nix flake update --flake ~/nixConfig && sudo nixos-rebuild switch --flake ~/nixConfig && sudo shutdown now";
       grb = "sudo nix-collect-garbage --delete-old && nix-collect-garbage --delete-old";
-      newProj = "nix flake init -t github:mochienya/nix-dev-template";
+      newProj = "nix flake init --refresh -t github:mochienya/nix-dev-template";
     };
     plugins = with pkgs.fishPlugins; [
       {

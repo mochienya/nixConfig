@@ -42,7 +42,6 @@ extras@{ pkgs, ... }:
       "wheel"
     ];
     shell = pkgs.fish;
-
   };
   security.sudo.wheelNeedsPassword = false;
 
@@ -74,7 +73,7 @@ extras@{ pkgs, ... }:
     kdePackages.discover
     signal-desktop-bin
     rar
-    wl-clipboard-rs
+    wl-clipboard
   ];
 
   system.stateVersion = "25.05";
