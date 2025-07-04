@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "mcp-nixos": {
+      "command": "mcp-nixos",
+      "trust": true,
+      "timeout": 30000
+    }
+  },
+  "telemetry": {
+    "enabled": false
+  },
+  "usageStatisticsEnabled": false
+}

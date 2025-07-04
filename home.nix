@@ -10,10 +10,10 @@ extras@{ inputs, pkgs, ... }:
 
   imports = [
     inputs.spicetify-nix.homeManagerModules.default
-    ./hmNixFiles/devStuff.nix
-    ./hmNixFiles/cliStuff.nix
-    ./hmNixFiles/mpv.nix
-    ./deStuff/fontsAndColors.nix
+    ./homeManager/devStuff.nix
+    ./homeManager/cliStuff.nix
+    ./homeManager/mpv.nix
+    ./homeManager/deStuff/fontsAndColors.nix
   ];
 
   home.packages = with pkgs; [
@@ -50,4 +50,16 @@ extras@{ inputs, pkgs, ... }:
       # theme = spicePkgs.themes.text;
       # colorScheme = "TokyoNight";
     };
+
+  xdg.desktopEntries.equibop = {
+    name = "Equibop";
+    exec = "${pkgs.equibop}/bin/equibop";
+    icon = "${pkgs.equibop}/share/icons/hicolor/1024x1024/apps/equibop.png";
+    comment = "used to talk to cassie :3";
+    categories = [
+      "Network"
+      "InstantMessaging"
+      "Chat"
+    ];
+  };
 }

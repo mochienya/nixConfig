@@ -4,7 +4,9 @@
   "nix.serverSettings": {
     "nixd": {
       "formatting": {
-        "command": [ "nixfmt" ]
+        "command": [
+          "nixfmt"
+        ]
       },
       "nixpkgs": {
         "expr": "(builtins.getFlake \"/home/mochie/nixConfig\").inputs.nixpkgs.legacyPackages.x86_64-linux"
@@ -18,6 +20,9 @@
         }
       }
     }
-},
-"editor.tabSize": 2
+  },
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "chat.mcp.enabled": true,
 }
