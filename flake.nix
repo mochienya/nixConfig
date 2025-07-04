@@ -37,6 +37,9 @@
         };
         modules = [
           ./configuration.nix
+          ./hardware-configuration.nix
+          ./modules/servicesAndEnvVars.nix
+          ./modules/gaming.nix
 
           home-manager.nixosModules.home-manager
           {

@@ -1,11 +1,6 @@
 extras@{ pkgs, ... }:
 
 {
-  imports = [
-    ./hardware-configuration.nix
-    ./extraNixFiles/servicesAndEnvVars.nix
-    ./extraNixFiles/gaming.nix
-  ];
   boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

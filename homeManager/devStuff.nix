@@ -13,9 +13,10 @@ extras@{ pkgs, ... }:
     gnumake
     glibc
     pnpm
-    nodejs_24
+    nodejs_latest
     bun
     nixfmt-rfc-style
+    (builtins.getFlake "github:utensils/mcp-nixos").packages.${pkgs.system}.default
   ];
 
   programs.vscode = {
