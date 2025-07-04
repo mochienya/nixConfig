@@ -5,6 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+    mcp-nixos.url = "github:utensils/mcp-nixos";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -48,7 +49,6 @@
               useUserPackages = true;
               extraSpecialArgs = {
                 inherit inputs;
-                inherit system;
                 inherit pkgs;
               };
 

@@ -19,12 +19,12 @@ extras@{ inputs, pkgs, ... }:
   home.packages = with pkgs; [
     syncplay
     croc
-    inputs.zen-browser.packages."${extras.system}".twilight
+    inputs.zen-browser.packages."${pkgs.system}".twilight
   ];
 
   programs.spicetify =
     let
-      spicePkgs = inputs.spicetify-nix.legacyPackages.${extras.system};
+      spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
     in
     {
       enable = true;
