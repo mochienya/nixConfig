@@ -65,7 +65,6 @@ extras@{ pkgs, ... }:
     yt-dlp
     qbittorrent
     equibop
-    kdePackages.discover
     signal-desktop-bin
     rar
     wl-clipboard
