@@ -6,6 +6,7 @@
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     mcp-nixos.url = "github:utensils/mcp-nixos";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -41,6 +42,7 @@
           ./hardware-configuration.nix
           ./modules/servicesAndEnvVars.nix
           ./modules/gaming.nix
+          inputs.nix-flatpak.nixosModules.nix-flatpak
 
           home-manager.nixosModules.home-manager
           {
