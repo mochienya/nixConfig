@@ -8,8 +8,6 @@
     zoxide
     fzf
     yazi
-    direnv
-    devenv
   ];
 
   home.shell.enableFishIntegration = true;
@@ -17,6 +15,7 @@
     enable = true;
     interactiveShellInit = ''
       set fish_greeting
+      direnv hook fish | source
       function nish
         begin
           set -l pkg $argv[1]

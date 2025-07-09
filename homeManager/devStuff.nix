@@ -17,7 +17,11 @@ extras@{ pkgs, ... }:
     bun
     nixfmt-rfc-style
     extras.inputs.mcp-nixos.packages.${pkgs.system}.mcp-nixos
+    direnv
+    devenv
   ];
+
+  programs.direnv.enable = true;
 
   programs.vscode = {
     enable = true;
