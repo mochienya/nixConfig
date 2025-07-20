@@ -16,6 +16,7 @@
     nix-direnv.enable = true;
     loadInNixShell = true;
     silent = true;
+    settings.whitelist.prefix = [ "~/proj/" ];
     direnvrcExtra = ''
       : "''${XDG_CACHE_HOME:="''${HOME}/.cache"}"
       declare -A direnv_layout_dirs
