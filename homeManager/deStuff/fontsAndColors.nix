@@ -11,6 +11,7 @@
 
   home.packages = with pkgs; [
     nerd-fonts.symbols-only
+    twitter-color-emoji
     texlivePackages.nunito
   ];
 
