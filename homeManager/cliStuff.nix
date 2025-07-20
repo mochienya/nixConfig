@@ -42,14 +42,6 @@
     ];
   };
 
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-    config.whitelist = {
-      prefix = [ "~/proj/" ];
-    };
-  };
-
   programs.kitty = {
     enable = true;
     font = {
@@ -62,9 +54,7 @@
       cursor_shape = "beam";
       tab_bar_edge = "top";
       shell = "fish";
-
     };
-
   };
 
   programs.zoxide.enable = true;
