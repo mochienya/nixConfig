@@ -20,6 +20,7 @@ extras@{ inputs, pkgs, ... }:
     syncplay
     croc
     inputs.zen-browser.packages."${pkgs.system}".twilight
+    inputs.copyparty.packages.${pkgs.system}.default
   ];
 
   programs.spicetify =

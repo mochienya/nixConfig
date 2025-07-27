@@ -8,6 +8,10 @@
     mcp-nixos.url = "github:utensils/mcp-nixos";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
+    copyparty = {
+      url = "github:9001/copyparty";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
