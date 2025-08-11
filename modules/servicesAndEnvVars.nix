@@ -8,8 +8,6 @@
 
   programs.fish.enable = true;
 
-  hardware.bluetooth.enable = true;
-
   # WHY does home manager not have direnvcExtra?? i hate you
   programs.direnv = {
     enable = true;

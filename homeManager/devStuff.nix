@@ -16,7 +16,6 @@ extras@{ pkgs, ... }:
     nodejs_latest
     bun
     nixfmt-rfc-style
-    extras.inputs.mcp-nixos.packages.${pkgs.system}.mcp-nixos
     direnv
     devenv
   ];
