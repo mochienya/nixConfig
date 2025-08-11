@@ -12,7 +12,7 @@ extras@{ pkgs, ... }:
     options = "--delete-old";
   };
 
-  networking.hostName = "mochiebox";
+  networking.hostName = extras.host;
   networking.networkmanager.enable = true;
   networking.firewall.enable = false; # i HATE security!!!
 

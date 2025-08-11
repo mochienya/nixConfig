@@ -5,7 +5,6 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
-    mcp-nixos.url = "github:utensils/mcp-nixos";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
 
     copyparty = {
@@ -27,51 +26,42 @@
     }@inputs:
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
+      specialArgs = {
+        host = "mochiebox";
+        inherit inputs;
       };
-
+      homeConfig = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        extraSpecialArgs = specialArgs;
+        users.mochie = import ./home.nix;
+      };
     in
     {
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
       nixosConfigurations.mochiebox = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = {
-          nixpkgs = pkgs;
-          inherit inputs;
-        };
+        inherit specialArgs;
         modules = [
           ./configuration.nix
-          ./hardware-configuration.nix
+          ./hosts/mochiebox/hardware-configuration.nix
           ./modules/servicesAndEnvVars.nix
           ./modules/gaming.nix
           inputs.nix-flatpak.nixosModules.nix-flatpak
-
           home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs = {
-                inherit inputs;
-                inherit pkgs;
-              };
-
-              users.mochie = import ./home.nix;
-            };
-          }
+          { home-manager = homeConfig; }
         ];
       };
-      homeConfigurations."mochie@mochiebox" = inputs.home-manager.lib.homeManagerConfiguration {
-        # nixd forced me to put this here i think it's dumb
-        pkgs = inputs.nixpkgs.legacyPackages.${system};
-        extraSpecialArgs = {
-          inherit inputs;
-          inherit system;
-        };
+      nixosConfigurations.lapmochie = nixpkgs.lib.nixosSystem {
+        inherit system;
+        inherit specialArgs;
         modules = [
-          ./home.nix
+          ./configuration.nix
+          ./modules/servicesAndEnvVars.nix
+          ./modules/gaming.nix
+          inputs.nix-flatpak.nixosModules.nix-flatpak
+          home-manager.nixosModules.home-manager
+          { home-manager = homeConfig; }
         ];
       };
     };

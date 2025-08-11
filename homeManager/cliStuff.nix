@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+extras@{ pkgs, ... }:
 {
   home.packages = with pkgs; [
     kitty
@@ -28,9 +28,9 @@
     shellAliases = {
       ls = "eza -1 -l -a -F --color=always --icons --no-permissions --no-user --no-time";
       nano = "micro";
-      nrbs = "sudo nixos-rebuild switch --flake ~/nixConfig";
+      nrbs = "sudo nixos-rebuild switch --flake ~/nixConfig#${extras.host}";
       nfu = "nix flake update --flake ~/nixConfig";
-      udrbsd = "nix flake update --flake ~/nixConfig && sudo nixos-rebuild switch --flake ~/nixConfig && sudo shutdown now";
+      udrbsd = "nix flake update --flake ~/nixConfig && sudo nixos-rebuild switch --flake ~/nixConfig#${extras.host} && sudo shutdown now";
       grb = "sudo nix-collect-garbage --delete-old && nix-collect-garbage --delete-old";
       newProj = "nix flake init --refresh -t github:mochienya/nix-dev-template";
     };

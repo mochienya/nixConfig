@@ -61,6 +61,8 @@
   networking.useDHCP = lib.mkDefault true;
   networking.interfaces.enp9s0.wakeOnLan.enable = true;
 
+  hardware.bluetooth.enable = true;
+
   # not too fond of green gpu
   hardware.graphics.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
