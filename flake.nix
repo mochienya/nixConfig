@@ -26,22 +26,24 @@
     }@inputs:
     let
       system = "x86_64-linux";
-      specialArgs = {
-        host = "mochiebox";
-        inherit inputs;
-      };
-      homeConfig = {
+      homeConfig = host: {
         useGlobalPkgs = true;
         useUserPackages = true;
-        extraSpecialArgs = specialArgs;
+        extraSpecialArgs = {
+          inherit inputs;
+          inherit host;
+        };
         users.mochie = import ./home.nix;
       };
     in
     {
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
-      nixosConfigurations.mochiebox = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.mochiebox = nixpkgs.lib.nixosSystem rec {
         inherit system;
-        inherit specialArgs;
+        specialArgs = {
+          host = "mochiebox";
+          inherit inputs;
+        };
         modules = [
           ./configuration.nix
           ./hosts/mochiebox/hardware-configuration.nix
@@ -49,19 +51,22 @@
           ./modules/gaming.nix
           inputs.nix-flatpak.nixosModules.nix-flatpak
           home-manager.nixosModules.home-manager
-          { home-manager = homeConfig; }
+          { home-manager = homeConfig specialArgs.host; }
         ];
       };
-      nixosConfigurations.lapmochie = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.lapmochie = nixpkgs.lib.nixosSystem rec {
         inherit system;
-        inherit specialArgs;
+        specialArgs = {
+          host = "lapmochie";
+          inherit inputs;
+        };
         modules = [
           ./configuration.nix
           ./modules/servicesAndEnvVars.nix
           ./modules/gaming.nix
           inputs.nix-flatpak.nixosModules.nix-flatpak
           home-manager.nixosModules.home-manager
-          { home-manager = homeConfig; }
+          { home-manager = homeConfig specialArgs.host; }
         ];
       };
     };
