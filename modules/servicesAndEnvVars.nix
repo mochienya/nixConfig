@@ -2,9 +2,11 @@
 {
   environment.sessionVariables = {
     NIXOS_OZONE_WL = 1;
+    SSH_ASKPASS_REQUIRE = "prefer";
   };
 
   programs.ssh.startAgent = true;
+  programs.ssh.enableAskPassword = true;
 
   programs.fish.enable = true;
 
