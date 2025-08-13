@@ -51,4 +51,25 @@
     serviceConfig.Type = "simple";
   };
   services.fprintd.enable = true;
+
+  # honestly scared of trying to use the dgpu in my laptop but the igpu can't decode 4k without frame drops
+  hardware.graphics.enable = true;
+  services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
+  hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement.enable = true;
+    powerManagement.finegrained = true;
+    package = config.boot.kernelPackages.nvidiaPackages.production;
+    open = true;
+    nvidiaSettings = true;
+    prime = {
+      nvidiaBusId = "PCI:1:0:0";
+      intelBusId = "PCI:0:2:0";
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+        offloadCmdMainProgram = "dgpu";
+      };
+    };
+  };
 }
