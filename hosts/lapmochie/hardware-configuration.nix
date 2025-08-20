@@ -54,7 +54,10 @@
 
   # honestly scared of trying to use the dgpu in my laptop but the igpu can't decode 4k without frame drops
   hardware.graphics.enable = true;
-  services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
+  services.xserver.videoDrivers = [
+    "modesetting"
+    "nvidia"
+  ];
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = true;
@@ -70,6 +73,27 @@
         enableOffloadCmd = true;
         offloadCmdMainProgram = "dgpu";
       };
+    };
+  };
+
+  # trying to make it not run like shit (I HATE AGGRESSIVE POWER MANAGEMENT IN MODERN LAPTOPS!!)
+  powerManagement.cpuFreqGovernor = "performance";
+  services.throttled.enable = true;
+  services.power-profiles-daemon.enable = false;
+  environment.systemPackages = [ pkgs.auto-cpufreq ];
+  services.auto-cpufreq.enable = true;
+  services.auto-cpufreq.settings = {
+    charger = {
+      governor = "performance";
+      energy_performance_preference = "performance";
+      energy_perf_bias = 0;
+      turbo = "always";
+    };
+    battery = {
+      governor = "powersave";
+      energy_performance_preference = "balance_power";
+      energy_perf_bias = 8;
+      turbo = "never";
     };
   };
 }
