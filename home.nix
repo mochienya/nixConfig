@@ -10,10 +10,12 @@ extras@{ inputs, pkgs, ... }:
 
   imports = [
     inputs.spicetify-nix.homeManagerModules.default
+    extras.inputs.plasma-manager.homeManagerModules.plasma-manager
     ./homeManager/devStuff.nix
     ./homeManager/cliStuff.nix
     ./homeManager/mpv.nix
     ./homeManager/deStuff/fontsAndColors.nix
+    ./homeManager/deStuff/kde.nix
   ];
 
   home.packages = with pkgs; [

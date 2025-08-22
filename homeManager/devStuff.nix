@@ -20,6 +20,7 @@ extras@{ pkgs, ... }:
     devenv
   ];
 
+ # this is only here for the fish integration
   programs.direnv.enable = true;
 
   programs.vscode = {
