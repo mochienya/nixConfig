@@ -8,6 +8,7 @@ extras@{ pkgs, ... }:
     zoxide
     fzf
     yazi
+    # starship
   ];
 
   home.shell.enableFishIntegration = true;
@@ -37,7 +38,15 @@ extras@{ pkgs, ... }:
     plugins = with pkgs.fishPlugins; [
       {
         name = "autopair";
-        src = autopair;
+        src = autopair.src;
+      }
+      {
+        name = "tide";
+        src = tide.src;
+      }
+      {
+        name = "colored-man-pages";
+        src = colored-man-pages.src;
       }
     ];
   };
@@ -49,13 +58,37 @@ extras@{ pkgs, ... }:
       size = 16;
     };
     settings = {
-      confirm_os_windows_close = 0;
+      confirm_os_window_close = 0;
+      wayland_titlebar_color = "background";
       enable_audio_bell = false;
       cursor_shape = "beam";
-      tab_bar_edge = "top";
+      tab_bar_edge = "bottom";
       shell = "fish";
+      tab_bar_style = "powerline";
+      tab_powerline_style = "round";
+    };
+    themeFile = "tokyo_night_night";
+    keybindings = {
+      "ctrl+shift+w" = "close_tab";
+      "alt+1" = "goto_tab 1";
+      "alt+2" = "goto_tab 2";
+      "alt+3" = "goto_tab 3";
+      "alt+4" = "goto_tab 4";
+      "alt+5" = "goto_tab 5";
+      "alt+6" = "goto_tab 6";
+      "alt+7" = "goto_tab 7";
+      "alt+8" = "goto_tab 8";
+      "alt+9" = "goto_tab 9";
     };
   };
+
+  # programs.starship = {
+  #   enable = true;
+  #   enableTransience = true;
+  #   settings = {
+  # writing a prompt is hard ok :(
+  #   };
+  # };
 
   programs.zoxide.enable = true;
   programs.zoxide.options = [ "--cmd cd" ];
