@@ -13,6 +13,7 @@ extras@{ inputs, pkgs, ... }:
     extras.inputs.plasma-manager.homeManagerModules.plasma-manager
     ./homeManager/devStuff.nix
     ./homeManager/cliStuff.nix
+    ./homeManager/cli/starship.nix
     ./homeManager/mpv.nix
     ./homeManager/deStuff/fontsAndColors.nix
     ./homeManager/deStuff/kde.nix

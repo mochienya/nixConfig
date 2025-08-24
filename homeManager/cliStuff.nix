@@ -8,22 +8,23 @@ extras@{ pkgs, ... }:
     zoxide
     fzf
     yazi
-    # starship
   ];
 
   home.shell.enableFishIntegration = true;
   programs.fish = {
     enable = true;
+    functions = {
+      nish = {
+        argumentNames = "pkg";
+        body = ''
+          set -lx NIXPKGS_ALLOW_UNFREE 1
+          command nix shell --impure "nixpkgs#$pkg"
+        '';
+      };
+    };
     interactiveShellInit = ''
       set fish_greeting
       direnv hook fish | source
-      function nish
-        begin
-          set -l pkg $argv[1]
-          set -lx NIXPKGS_ALLOW_UNFREE 1
-          command nix shell --impure "nixpkgs#$pkg"
-        end
-      end
     '';
     preferAbbrs = false;
     shellAliases = {
@@ -39,10 +40,6 @@ extras@{ pkgs, ... }:
       {
         name = "autopair";
         src = autopair.src;
-      }
-      {
-        name = "tide";
-        src = tide.src;
       }
       {
         name = "colored-man-pages";
@@ -66,6 +63,7 @@ extras@{ pkgs, ... }:
       shell = "fish";
       tab_bar_style = "powerline";
       tab_powerline_style = "round";
+      symbol_map = "U+23FB-U+23FE,U+2665,U+26A1,U+2B58,U+E000-U+E00A,U+E0A0-U+E0A3,U+E0B0-U+E0D4,U+E200-U+E2A9,U+E300-U+E3E3,U+E5FA-U+E6AA,U+E700-U+E7C5,U+EA60-U+EBEB,U+F000-U+F2E0,U+F300-U+F32F,U+F400-U+F4A9,U+F500-U+F8FF,U+F0001-U+F1AF0 Symbols Nerd Font Mono";
     };
     themeFile = "tokyo_night_night";
     keybindings = {
@@ -81,14 +79,6 @@ extras@{ pkgs, ... }:
       "alt+9" = "goto_tab 9";
     };
   };
-
-  # programs.starship = {
-  #   enable = true;
-  #   enableTransience = true;
-  #   settings = {
-  # writing a prompt is hard ok :(
-  #   };
-  # };
 
   programs.zoxide.enable = true;
   programs.zoxide.options = [ "--cmd cd" ];
