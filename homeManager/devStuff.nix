@@ -18,6 +18,7 @@ extras@{ pkgs, ... }:
     nixfmt-rfc-style
     direnv
     devenv
+    gitui
   ];
 
  # this is only here for the fish integration

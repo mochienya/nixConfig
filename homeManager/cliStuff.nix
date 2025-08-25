@@ -15,10 +15,12 @@ extras@{ pkgs, ... }:
     enable = true;
     functions = {
       nish = {
-        argumentNames = "pkg";
+        # line 2 is "prepend 'nixpkgs#' to every argument passed to the function"
+        # fish is fun :3
         body = ''
           set -lx NIXPKGS_ALLOW_UNFREE 1
-          command nix shell --impure "nixpkgs#$pkg"
+          set -l pkgs "nixpkgs#"$argv
+          command nix shell --impure (string join " " $pkgs)
         '';
       };
     };
@@ -77,6 +79,22 @@ extras@{ pkgs, ... }:
       "alt+7" = "goto_tab 7";
       "alt+8" = "goto_tab 8";
       "alt+9" = "goto_tab 9";
+    };
+  };
+
+  programs.yazi = {
+    enable = true;
+    plugins = with pkgs.yaziPlugins; {
+      inherit smart-filter;
+    };
+    keymap = {
+      mgr.prepend_keymap = [
+        {
+          on = "f";
+          run = "plugin smart-filter";
+          desc = "Smart filter plugin";
+        }
+      ];
     };
   };
 

@@ -14,6 +14,7 @@ extras@{ inputs, pkgs, ... }:
     ./homeManager/devStuff.nix
     ./homeManager/cliStuff.nix
     ./homeManager/cli/starship.nix
+    ./homeManager/cli/helix.nix
     ./homeManager/mpv.nix
     ./homeManager/deStuff/fontsAndColors.nix
     ./homeManager/deStuff/kde.nix
