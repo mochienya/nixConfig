@@ -1,7 +1,6 @@
 { pkgs, ... }:
 
 {
-  home.packages = [ pkgs.helix ];
   programs.helix = {
     enable = true;
     defaultEditor = true;
@@ -14,18 +13,8 @@
         bufferline = "multiple";
         trim-final-newlines = true;
         trim-trailing-whitespace = true;
-        auto-save.focus-lost = true;
-        clipboard-provider.custom = {
-          yank = {
-            command = "wl-copy";
-            args = [ ];
-          };
-          paste = {
-            command = "wl-paste";
-            args = [ ];
-          };
-        };
         cursor-shape.insert = "bar";
+        auto-save.focus-lost = true;
       };
     };
   };

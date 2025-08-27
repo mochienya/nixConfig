@@ -64,6 +64,7 @@
         modules = [
           ./configuration.nix
           ./modules/servicesAndEnvVars.nix
+          ./modules/gaming.nix
           ./hosts/lapmochie/hardware-configuration.nix
           inputs.nix-flatpak.nixosModules.nix-flatpak
           home-manager.nixosModules.home-manager
