@@ -19,7 +19,7 @@ extras@{ pkgs, ... }:
         # fish is fun :3
         body = ''
           set -lx NIXPKGS_ALLOW_UNFREE 1
-          set -l pkgs "nixpkgs#"$argv
+          set -l pkgs "github:NixOS/nixpkgs/nixos-unstable#"$argv
           command nix shell --impure (string join " " $pkgs)
         '';
       };
