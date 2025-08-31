@@ -90,7 +90,7 @@ extras@{ pkgs, ... }:
     keymap = {
       mgr.prepend_keymap = [
         {
-          on = "f";
+          on = "F";
           run = "plugin smart-filter";
           desc = "Smart filter plugin";
         }
