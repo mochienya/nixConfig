@@ -38,6 +38,8 @@
     ];
   };
 
+  services.fstrim.enable = true;
+
   swapDevices = [ ];
 
   networking.useDHCP = lib.mkDefault true;
@@ -54,8 +56,24 @@
   };
   services.fprintd.enable = true;
 
+  # igpu improvement(?)
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      intel-compute-runtime
+      vpl-gpu-rt
+    ];
+    extraPackages32 = with pkgs.driversi686Linux; [
+      intel-media-driver
+    ];
+  };
+
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "iHD";
+  };
+
   # honestly scared of trying to use the dgpu in my laptop but the igpu can't decode 4k without frame drops
-  hardware.graphics.enable = true;
   services.xserver.videoDrivers = [
     "modesetting"
     "nvidia"
@@ -93,8 +111,8 @@
     };
     battery = {
       governor = "powersave";
-      energy_performance_preference = "balance_power";
-      energy_perf_bias = 8;
+      energy_performance_preference = "power";
+      energy_perf_bias = 15;
       turbo = "never";
     };
   };

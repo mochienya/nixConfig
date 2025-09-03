@@ -31,7 +31,7 @@ extras@{ pkgs, ... }:
 
   programs.ssh = {
     enable = true;
-    addKeysToAgent = "yes";
+    matchBlocks."*".addKeysToAgent = "yes";
     extraConfig = ''
       Host github.com
           IdentityFile ~/.ssh/github

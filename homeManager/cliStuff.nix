@@ -8,6 +8,8 @@ extras@{ pkgs, ... }:
     zoxide
     fzf
     yazi
+    fd
+    ripgrep-all
   ];
 
   home.shell.enableFishIntegration = true;

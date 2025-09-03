@@ -10,7 +10,7 @@ extras@{ inputs, pkgs, ... }:
 
   imports = [
     inputs.spicetify-nix.homeManagerModules.default
-    extras.inputs.plasma-manager.homeManagerModules.plasma-manager
+    extras.inputs.plasma-manager.homeModules.plasma-manager
     ./homeManager/devStuff.nix
     ./homeManager/cliStuff.nix
     ./homeManager/cli/starship.nix
