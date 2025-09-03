@@ -66,7 +66,7 @@ extras@{ pkgs, ... }:
       in
       {
         text = ''
-          rm -f ${fontHell}/10-hm-fonts.conf ${fontHell}/52-hm-default-fonts.conf
+          rm -f ${fontHell}/10-hm-fonts.conf
         '';
       };
   };
