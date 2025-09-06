@@ -58,18 +58,18 @@ extras@{ pkgs, ... }:
     ];
   };
 
-  system.userActivationScripts = {
-    # god forbid i open font manager to see what the full name of a font is
-    homeManagerPleaseFix =
-      let
-        fontHell = "/home/mochie/.config/fontconfig/conf.d";
-      in
-      {
-        text = ''
-          rm -f ${fontHell}/10-hm-fonts.conf
-        '';
-      };
-  };
+  # system.userActivationScripts = {
+  #   # god forbid i open font manager to see what the full name of a font is
+  #   homeManagerPleaseFix =
+  #     let
+  #       fontHell = "/home/mochie/.config/fontconfig/conf.d";
+  #     in
+  #     {
+  #       text = ''
+  #         rm -f ${fontHell}/10-hm-fonts.conf
+  #       '';
+  #     };
+  # };
 
   environment.systemPackages = with pkgs; [
     git
