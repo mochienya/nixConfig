@@ -71,6 +71,7 @@ extras@{ pkgs, ... }:
     };
     themeFile = "tokyo_night_night";
     keybindings = {
+      "ctrl+shift+t" = "new_tab_with_cwd";
       "ctrl+shift+w" = "close_tab";
       "alt+1" = "goto_tab 1";
       "alt+2" = "goto_tab 2";
