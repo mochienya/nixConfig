@@ -17,11 +17,11 @@ let
     };
   seek-end =
     let
-      file = builtins.toFile "seek-end.lua" ''
+      file = builtins.toFile "seek_end.lua" ''
         function seek_end()
-          mp.set_property("time-pos", mp.get_property_native("duration") - 5)
+          mp.set_property("time-pos", mp.get_property_number("duration") - 5)
         end
-        mp.add_key_binding("y", "seek_end", seek_end)
+        mp.add_key_binding(nil, "seek_end", seek_end)
       '';
     in
     pkgs.mpvScripts.buildLua {
@@ -65,7 +65,7 @@ in
       WHEEL_DOWN = "add volume -2";
       j = "add chapter -1";
       l = "add chapter 1";
-      y = "script-binding seek-end";
+      y = "script-binding seek_end";
       "`" = "script-binding console/enable";
     };
     scripts =
@@ -73,6 +73,7 @@ in
       [
         mpv-osc-tethys
         thumbfast
+        mpv-discord
       ]
       ++ [
         seek-end
