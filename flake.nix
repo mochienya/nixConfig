@@ -30,10 +30,7 @@
       homeConfig = host: {
         useGlobalPkgs = true;
         useUserPackages = true;
-        extraSpecialArgs = {
-          inherit inputs;
-          inherit host;
-        };
+        extraSpecialArgs = { inherit inputs host; };
         users.mochie = import ./home.nix;
       };
     in
