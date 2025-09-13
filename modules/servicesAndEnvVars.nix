@@ -30,4 +30,17 @@
       }
     '';
   };
+
+  services.keyd.enable = true;
+  services.keyd.keyboards = {
+    "default" = {
+      ids = [ "*" ];
+      settings = {
+        main = {
+          capslock = "escape";
+          escape = "capslock";
+        };
+      };
+    };
+  };
 }
