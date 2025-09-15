@@ -1,18 +1,23 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
   programs.helix = {
     enable = true;
     defaultEditor = true;
-    settings = {
-      theme = "tokyonight";
+    # fuck you i hate `let in` for literally everything
+    settings = rec {
+      theme = "material_deep_ocean";
       editor = {
         middle-click-paste = false;
-        shell = [ "fish" ];
         line-number = "relative";
         bufferline = "multiple";
-        trim-final-newlines = true;
-        trim-trailing-whitespace = true;
+        shell = [
+          "fish"
+          "-c"
+        ];
+        continue-comments = false;
+        completion-timeout = 5;
+        auto-format = false;
         cursor-shape.insert = "bar";
         auto-save.focus-lost = true;
       };
@@ -24,8 +29,57 @@
         "A-d" = "delete_selection";
         "c" = "change_selection_noyank";
         "A-c" = "change_selection";
-        # "A-j" = ["select_register m" "delete_selection" "move_visual_line_down" "paste_after"];
-        # "A-k" = ["select_register m" "delete_selection" "move_visual_line_up" "paste_after"];
+        "D" = [
+          "move_char_left"
+          "delete_selection_noyank"
+        ];
+        "A-j" = "@x\"m<A-d>j\"mP;";
+        "A-k" = "@x\"m<A-d>k\"mP;";
+        "C-I" = ":format";
+        "X" = ":w";
+        "." = "repeat_last_motion";
+        "H" = "goto_first_nonwhitespace";
+        "L" = "goto_line_end";
+        "C-h" = "goto_previous_buffer";
+        "C-l" = "goto_next_buffer";
+        "x" = "extend_to_line_bounds";
+        "T" = [
+          "move_prev_word_start"
+          "move_next_word_end"
+        ];
+        "i" = [
+          "collapse_selection"
+          "insert_mode"
+        ];
+        "a" = [
+          "collapse_selection"
+          "append_mode"
+        ];
+        "esc" = [
+          "keep_primary_selection"
+          "collapse_selection"
+        ];
+      };
+      # i wanted to use lazygit too but the escape key doesn't work in the offical docs' recipe
+      # and [the issue](https://github.com/helix-editor/helix/issues/13818) was marked as not planned... (neogit is calling)
+      keys.normal.space = {
+        e = [
+          ":sh rm -f /tmp/unique-file-h21a434"
+          ":insert-output yazi '%{buffer_name}' --chooser-file=/tmp/unique-file-h21a434"
+          ":insert-output echo \"x1b[?1049h\" > /dev/tty"
+          ":open %sh{cat /tmp/unique-file-h21a434}"
+          ":redraw"
+          ":set mouse false"
+          ":set mouse true"
+        ];
+      };
+      keys.insert = {
+        "C-c" = "toggle_line_comments";
+      };
+      # idk if it actually follows normal mode config when changed but i don't feel like finding out rn (ever)
+      keys.select = keys.normal // {
+        "x" = "extend_line_below";
+        "esc" = "normal_mode";
       };
     };
   };
