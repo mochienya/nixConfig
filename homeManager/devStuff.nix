@@ -1,33 +1,21 @@
-extras@{ pkgs, ... }:
+{ pkgs, ... }:
 {
   home.packages = with pkgs; [
-    github-desktop
     zed-editor
     micro
     vscode
     nixd
-    pkg-config
-    openssl
-    cmake
-    gcc
-    gnumake
-    glibc
     pnpm
     nodejs_latest
     bun
     nixfmt-rfc-style
     direnv
     devenv
-    gitui
+    lazygit
   ];
 
  # this is only here for the fish integration
   programs.direnv.enable = true;
-
-  programs.vscode = {
-    enable = true;
-    mutableExtensionsDir = true;
-  };
 
   programs.ssh = {
     enable = true;
