@@ -4,15 +4,16 @@ extras@{ pkgs, ... }:
   programs.fish = {
     enable = true;
     functions = {
-      nish = {
-        # line 2 is "prepend 'nixpkgs#' to every argument passed to the function"
-        # fish is fun :3
-        body = ''
-          set -lx NIXPKGS_ALLOW_UNFREE 1
-          set -l pkgs "github:NixOS/nixpkgs/nixos-unstable#"$argv
-          command nix shell --impure $pkgs
-        '';
-      };
+      nish.body = ''
+        set -lx NIXPKGS_ALLOW_UNFREE 1
+        set -l pkgs "github:NixOS/nixpkgs/nixos-unstable#"$argv
+        command nix shell --impure $pkgs
+      '';
+      mpvfuck.body = ''
+        set file (command cat (which mpv))
+        set match (string match -r 'mpv"\s+(.+)\s"\$@"' $file)[2]
+        set replace (string replace -a -- "--script=" '; load-script ' $match)
+        command wl-copy (string sub -s 3 $replace)'';
     };
     interactiveShellInit = ''
       set fish_greeting
