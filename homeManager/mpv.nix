@@ -19,7 +19,7 @@ let
     let
       file = builtins.toFile "seek_end.lua" ''
         function seek_end()
-          mp.set_property("time-pos", mp.get_property_number("duration") - 5)
+          mp.commandv("seek", math.floor(mp.get_property_number("duration") - 4), "absolute")
         end
         mp.add_key_binding(nil, "seek_end", seek_end)
       '';
