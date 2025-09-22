@@ -38,15 +38,20 @@ in
     config = {
       input-default-bindings = false;
       input-builtin-bindings = false;
+
       sub-outline-color = "0.0/0.3";
       sub-border-style = "opaque-box";
       sub-outline-size = -2;
       sub-filter-regex-append = "opensubtitles\\.org";
       sub-auto = "all";
+
+      ytdl-format = "bestvideo+bestaudio/best";
+      slang = "en";
+      ytdl-raw-options = "ignore-config=,sub-lang=en,write-sub=,write-auto-sub=";
+
       hidpi-window-scale = false;
       hwdec = "auto";
       profile = "high-quality";
-      # vo = "gpu-next";
       vulkan-swap-mode = "auto";
       gpu-context = "wayland";
     };
