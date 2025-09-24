@@ -30,5 +30,8 @@
     enable = true;
     userName = "mochie~!";
     userEmail = "187453775+mochienya@users.noreply.github.com";
+    extraConfig = {
+      pull.rebase = true;
+    };
   };
 }
