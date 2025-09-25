@@ -26,8 +26,7 @@ extras@{ pkgs, ... }:
       nrbs = "sudo nixos-rebuild switch --flake ~/nixConfig#${extras.host}";
       nfu = "nix flake update --flake ~/nixConfig";
       udrbsd = "nix flake update --flake ~/nixConfig && sudo nixos-rebuild switch --flake ~/nixConfig#${extras.host} && sudo shutdown now";
-      grb = "sudo nix-collect-garbage --delete-old && nix-collect-garbage --delete-old";
-      newProj = "nix flake init --refresh -t github:mochienya/nix-dev-template";
+      grb = "sudo nix-collect-garbage -d && nix-collect-garbage -d";
     };
     plugins = with pkgs.fishPlugins; [
       {
