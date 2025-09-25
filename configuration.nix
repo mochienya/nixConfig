@@ -75,7 +75,10 @@ extras@{ pkgs, ... }:
     git
     ntfs3g
     ffmpeg-full
-    yt-dlp
+    (import (builtins.fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/c3ffe46c059e3a830d9af6fad7d2b51cf4e15026.tar.gz";
+      sha256 = "sha256:0rq6hfrs22ik4j20g13q3mcq7ylgnq8bz7w1v62ahil9qjiw2hqm";
+    }) { inherit (pkgs) system; }).yt-dlp
     qbittorrent
     equibop
     signal-desktop-bin
