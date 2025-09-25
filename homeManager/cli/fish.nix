@@ -6,7 +6,7 @@ extras@{ pkgs, ... }:
     functions = {
       nish.body = ''
         set -lx NIXPKGS_ALLOW_UNFREE 1
-        set -l pkgs "github:NixOS/nixpkgs/nixos-unstable#"$argv
+        set -l pkgs "master#"$argv
         command nix shell --impure $pkgs
       '';
       mpvfuck.body = ''
@@ -25,9 +25,8 @@ extras@{ pkgs, ... }:
       nano = "micro";
       nrbs = "sudo nixos-rebuild switch --flake ~/nixConfig#${extras.host}";
       nfu = "nix flake update --flake ~/nixConfig";
-      udrbsd = "nix flake update --flake ~/nixConfig && sudo nixos-rebuild switch --flake ~/nixConfig#${extras.host} && sudo shutdown now";
-      grb = "sudo nix-collect-garbage --delete-old && nix-collect-garbage --delete-old";
-      newProj = "nix flake init --refresh -t github:mochienya/nix-dev-template";
+      udrbsd = "sudo nixos-rebuild boot --flake ~/nixConfig#${extras.host} --recreate-lockfile && sudo shutdown now";
+      grb = "sudo nix-collect-garbage -d && nix-collect-garbage -d";
     };
     plugins = with pkgs.fishPlugins; [
       {
