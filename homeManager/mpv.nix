@@ -78,7 +78,6 @@ in
       [
         mpv-osc-tethys
         thumbfast
-        mpv-discord
       ]
       ++ [
         seek-end

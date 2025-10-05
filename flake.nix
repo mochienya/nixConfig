@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    master.url = "github:NixOS/nixpkgs/master";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
@@ -35,12 +36,13 @@
       };
     in
     {
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
+      formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
       nixosConfigurations.mochiebox = nixpkgs.lib.nixosSystem rec {
         inherit system;
         specialArgs = {
           host = "mochiebox";
           inherit inputs;
+          master = inputs.master.legacyPackages.${system};
         };
         modules = [
           ./configuration.nix
@@ -57,6 +59,7 @@
         specialArgs = {
           host = "lapmochie";
           inherit inputs;
+          master = inputs.master.legacyPackages.${system};
         };
         modules = [
           ./configuration.nix
