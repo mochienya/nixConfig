@@ -19,7 +19,11 @@
         completion-timeout = 5;
         auto-format = false;
         cursor-shape.insert = "bar";
-        auto-save.focus-lost = true;
+        auto-save = {
+          focus-lost = true;
+          after-delay.enable = true;
+          after-delay.timeout = 500;
+        };
       };
       keys.normal = {
         # most of the time i don't care about what i'm deleting
@@ -36,17 +40,11 @@
         "A-j" = "@x\"m<A-d>j\"mP;";
         "A-k" = "@x\"m<A-d>k\"mP;";
         "C-I" = ":format";
-        "X" = ":w";
         "." = "repeat_last_motion";
         "H" = "goto_first_nonwhitespace";
         "L" = "goto_line_end";
         "C-h" = "goto_previous_buffer";
         "C-l" = "goto_next_buffer";
-        "x" = "extend_to_line_bounds";
-        "T" = [
-          "move_prev_word_start"
-          "move_next_word_end"
-        ];
         "i" = [
           "collapse_selection"
           "insert_mode"
@@ -78,7 +76,6 @@
       };
       # idk if it actually follows normal mode config when changed but i don't feel like finding out rn (ever)
       keys.select = keys.normal // {
-        "x" = "extend_line_below";
         "esc" = "normal_mode";
       };
     };
