@@ -12,10 +12,18 @@
     direnv
     devenv
     lazygit
+    gnupg
   ];
 
- # this is only here for the fish integration
+  # this is only here for the fish integration
   programs.direnv.enable = true;
+
+  services.gpg-agent = {
+    enable = true;
+    enableScDaemon = false;
+    enableExtraSocket = true;
+    pinentry.package = pkgs.pinentry-curses;
+  };
 
   programs.ssh = {
     enable = true;
@@ -30,6 +38,7 @@
     enable = true;
     userName = "mochie~!";
     userEmail = "187453775+mochienya@users.noreply.github.com";
+    signing.key = "7A49511084F4EAF1BE305CF0CC3BE964564F9554";
     extraConfig = {
       pull.rebase = true;
     };
