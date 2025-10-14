@@ -9,6 +9,10 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
     plasma-manager.url = "github:nix-community/plasma-manager";
 
+    nvf = {
+      url = "github:notashelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     copyparty = {
       url = "github:9001/copyparty";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,6 +32,7 @@
     }@inputs:
     let
       system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
       homeConfig = host: {
         useGlobalPkgs = true;
         useUserPackages = true;
@@ -70,6 +75,27 @@
           home-manager.nixosModules.home-manager
           { home-manager = homeConfig specialArgs.host; }
         ];
+      };
+      packages.${system}.nyavim =
+        (inputs.nvf.lib.neovimConfiguration {
+          inherit pkgs;
+          modules = [
+            (import ./homeManager/cli/neovim)
+          ];
+        }).neovim.overrideAttrs
+          (
+            final: old: {
+              meta = {
+                name = "nyavim";
+                homepage = "https://github.com/mochienya/nixConfig/tree/main/homeManager/cli/neovim";
+                description = "mochie's neovim config!! :3";
+              };
+            }
+          );
+      apps.${system}.nyavim = {
+        type = "app";
+        program = "${self.packages.${system}.nyavim}/bin/nvim";
+        meta.description = self.packages.${system}.nyavim.meta.description;
       };
     };
 }
