@@ -5,8 +5,12 @@ extras@{ pkgs, ... }:
     enable = true;
     functions = {
       nish.body = ''
-        set -lx NIXPKGS_ALLOW_UNFREE 1
-        set -l pkgs "github:NixOS/nixpkgs/nixos-unstable#"$argv
+        argparse -N1 'm/master' -- $argv; or return 1
+        set -f branch "nixos-unstable"
+        set -q _flag_master; and set -f branch "master"
+
+        set -fx NIXPKGS_ALLOW_UNFREE 1
+        set -f pkgs "github:NixOS/nixpkgs/$branch#"$argv
         command nix shell --impure $pkgs
       '';
       mpvfuck.body = ''
