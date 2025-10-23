@@ -41,7 +41,7 @@
       };
     in
     {
-      formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-rfc-style;
+      formatter.${system} = pkgs.nixfmt-rfc-style;
       nixosConfigurations.mochiebox = nixpkgs.lib.nixosSystem rec {
         inherit system;
         specialArgs = {
@@ -79,9 +79,12 @@
       packages.${system}.nyavim =
         (inputs.nvf.lib.neovimConfiguration {
           inherit pkgs;
-          modules = [
-            (import ./homeManager/cli/neovim)
-          ];
+          # no idea if this is necessary but i didn't want to find out
+          modules = (
+            map (f: f { inherit pkgs; }) [
+              (import ./homeManager/cli/neovim)
+            ]
+          );
         }).neovim.overrideAttrs
           (
             final: old: {
