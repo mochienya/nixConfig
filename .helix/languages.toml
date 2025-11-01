@@ -1,0 +1,9 @@
+[language-server.nixd.config.nixd.options.home-manager]
+expr = "(builtins.getFlake (toString /home/mochie/nixConfig)).nixosConfigurations.mochiebox.options.home-manager.users.type.getSubOptions []"
+
+[language-server.nixd.config.nixd.options.nixos]
+expr = "(builtins.getFlake (toString /home/mochie/nixConfig)).nixosConfigurations.mochiebox.options"
+
+[language-server.nixd.config.nixd.options.nvf]
+expr =  "let sysFlake = builtins.getFlake (toString /home/mochie/nixConfig); pkgs = sysFlake.inputs.nixpkgs.legacyPackages.x86_64-linux; nvfThingy = sysFlake.inputs.nvf.lib.neovimConfiguration {inherit pkgs;}; in nvfThingy.options"
+
