@@ -5,7 +5,7 @@
     enable = true;
     workspace = {
       lookAndFeel = "org.kde.breezedark.desktop";
-      wallpaper = "/home/mochie/nixConfig/files/trans-nix-wallpaper.png";
+      wallpaper = "/home/mochie/nixConfig/assets/trans-nix-wallpaper.png";
       wallpaperFillMode = "preserveAspectFit";
       wallpaperBackground.color = "30,30,38";
     };
@@ -28,7 +28,7 @@
           {
             kickoff = {
               sortAlphabetically = true;
-              icon = "/home/mochie/nixConfig/files/trans-nix.svg";
+              icon = "/home/mochie/nixConfig/assets/trans-nix.svg";
             };
           }
           {

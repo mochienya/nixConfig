@@ -22,13 +22,14 @@ extras@{ inputs, pkgs, ... }:
   home.packages = with pkgs; [
     syncplay
     croc
-    inputs.zen-browser.packages."${pkgs.system}".twilight
-    inputs.copyparty.packages.${pkgs.system}.default
+    ayugram-desktop
+    inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".twilight
+    inputs.copyparty.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   programs.spicetify =
     let
-      spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
+      spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
     in
     {
       enable = true;

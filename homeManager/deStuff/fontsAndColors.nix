@@ -5,7 +5,7 @@ let
     name = "MochieIosevka";
     version = "1.0";
 
-    src = ../../files;
+    src = ../../assets;
 
     installPhase = ''
       mkdir -p $out/share/fonts/truetype
@@ -18,7 +18,7 @@ in
   fonts.fontconfig.enable = true;
 
   home.file."/.local/share/fonts/truetype/Nunito/Nunito-VariableFont_wght.ttf".source =
-    ../../files/Nunito-VariableFont_wght.ttf;
+    ../../assets/Nunito-VariableFont_wght.ttf;
 
   home.packages = with pkgs; [
     nerd-fonts.symbols-only

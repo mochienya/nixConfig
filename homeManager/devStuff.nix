@@ -36,11 +36,13 @@
 
   programs.git = {
     enable = true;
-    userName = "mochie~!";
-    userEmail = "187453775+mochienya@users.noreply.github.com";
     signing.key = "7A49511084F4EAF1BE305CF0CC3BE964564F9554";
-    extraConfig = {
+    settings = {
       pull.rebase = true;
+      user = {
+        name = "mochie~!";
+        email = "187453775+mochienya@users.noreply.github.com";
+      };
     };
   };
 }
