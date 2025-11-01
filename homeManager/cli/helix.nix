@@ -4,6 +4,7 @@
   programs.helix = {
     enable = true;
     defaultEditor = true;
+    languages = import ./helixLangs;
     # fuck you i hate `let in` for literally everything
     settings = rec {
       theme = "material_deep_ocean";
