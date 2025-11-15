@@ -32,7 +32,7 @@
       "alt+9" = "goto_tab 9";
     };
   };
-  # i know it doesn't really belong here, fuck you
+  # here for the different icon
   xdg.desktopEntries.kitty = {
     name = "kitty";
     type = "Application";
@@ -51,5 +51,11 @@
         hash = "sha256-5a56y8qzquZocPyWwadhkF+0fZ04Xaqr1z29QqE78LE=";
       }
     );
+  };
+
+  home.sessionVariables.TERMINAL = "kitty";
+  xdg.terminal-exec = {
+    enable = true;
+    settings.default = [ "kitty.desktop" ];
   };
 }
