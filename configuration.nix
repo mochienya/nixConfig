@@ -35,6 +35,7 @@ extras@{ pkgs, ... }:
     extraGroups = [
       "networkmanager"
       "wheel"
+      "gamemode"
     ];
     shell = pkgs.fish;
   };
