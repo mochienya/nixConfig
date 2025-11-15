@@ -25,6 +25,10 @@ extras@{ inputs, pkgs, ... }:
     ayugram-desktop
     inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".twilight
     inputs.copyparty.packages.${pkgs.stdenv.hostPlatform.system}.default
+    (import (pkgs.fetchzip {
+      url = "https://github.com/Rexcrazy804/nixpkgs/archive/update-equibop.tar.gz";
+      hash = "sha256-aeK4lkMzH1/KHR9c63jfDx+gRpH7w82OzDYMNfw1pok=";
+    }) {inherit (pkgs.stdenv.hostPlatform) system;}).equibop
   ];
 
   programs.spicetify =
@@ -55,16 +59,4 @@ extras@{ inputs, pkgs, ... }:
       theme = spicePkgs.themes.text;
       colorScheme = "Spotify";
     };
-
-  xdg.desktopEntries.equibop = {
-    name = "Equibop";
-    exec = "${pkgs.equibop}/bin/equibop";
-    icon = "${pkgs.equibop}/share/icons/hicolor/1024x1024/apps/equibop.png";
-    comment = "used to talk to cassie :3";
-    categories = [
-      "Network"
-      "InstantMessaging"
-      "Chat"
-    ];
-  };
 }
