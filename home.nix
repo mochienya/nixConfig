@@ -23,6 +23,7 @@ extras@{ inputs, pkgs, ... }:
     syncplay
     croc
     ayugram-desktop
+    nh
     inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".twilight
     inputs.copyparty.packages.${pkgs.stdenv.hostPlatform.system}.default
     (import (pkgs.fetchzip {

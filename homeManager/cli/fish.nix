@@ -26,11 +26,9 @@ extras@{ pkgs, ... }:
     preferAbbrs = false;
     shellAliases = {
       ls = "eza -1 -l -a -F --color=always --icons --no-permissions --no-user --no-time";
-      nano = "micro";
-      nrbs = "sudo nixos-rebuild switch --flake ~/nixConfig#${extras.host}";
-      nfu = "nix flake update --flake ~/nixConfig";
-      udrbsd = "nix flake update --flake ~/nixConfig && sudo nixos-rebuild switch --flake ~/nixConfig#${extras.host} && sudo shutdown now";
-      grb = "sudo nix-collect-garbage -d && nix-collect-garbage -d";
+      nrbs = "nh os switch ~/nixConfig -H ${extras.host}";
+      nfu = "nix flake update";
+      udrbsd = "nh os boot ~/nixConfig -uH ${extras.host} && sudo shutdown now";
     };
     plugins = with pkgs.fishPlugins; [
       {
