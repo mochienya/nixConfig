@@ -5,18 +5,19 @@ extras@{ pkgs, ... }:
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot.configurationLimit = 10;
-  nix.settings.auto-optimise-store = true;
-  nix.gc = {
-    automatic = true;
-    dates = "Mon,Wed,Fri,Sun *-*-* 00:00:00";
-    options = "--delete-old";
-  };
 
   networking.hostName = extras.host;
   networking.networkmanager.enable = true;
   networking.firewall.enable = false; # i HATE security!!!
 
-  time.timeZone = "Europe/Oslo";
+  networking.timeServers = [
+    "0.pool.ntp.org"
+    "1.pool.ntp.org"
+    "2.pool.ntp.org"
+    "3.pool.ntp.org"
+  ];
+  time.timeZone = null;
+  services.automatic-timezoned.enable = true;
   i18n.defaultLocale = "en_US.UTF-8";
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
@@ -59,6 +60,14 @@ extras@{ pkgs, ... }:
     ];
   };
 
+  nix.settings.auto-optimise-store = true;
+  nix.gc = {
+    automatic = true;
+    dates = "Mon,Wed,Fri,Sun *-*-* 00:00:00";
+    options = "--delete-old";
+  };
+
+
   nix.registry.master = {
     from = {
       type = "indirect";
@@ -78,8 +87,7 @@ extras@{ pkgs, ... }:
     ffmpeg-full
     extras.master.yt-dlp
     qbittorrent
-    equibop
-    signal-desktop-bin
+    signal-desktop
     rar
     wl-clipboard
   ];
