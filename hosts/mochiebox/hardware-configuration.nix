@@ -26,11 +26,16 @@
   };
 
   # my second ntfs drive
-  #   fileSystems."/mnt/windows" =
-  #   { device = "/dev/disk-by-uuid/C47A48227A481418";
-  #     fsType = "ntfs-3g";
-  #     options = [ "rw" "uid=1000"];
-  #   };
+  fileSystems."/mnt/windows" = {
+    device = "/dev/disk-by-uuid/C47A48227A481418";
+    fsType = "ntfs-3g";
+    options = [
+      "defaults"
+      "uid=1000"
+      "gid=1000"
+      "nofail"
+    ];
+  };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
@@ -39,7 +44,10 @@
     "/" = {
       device = "/dev/disk/by-uuid/7c4226d8-a60d-4fa3-940c-e5db45d79f95";
       fsType = "btrfs";
-      options = [ "subvol=@" ];
+      options = [
+        "subvol=@"
+        "noatime"
+      ];
     };
     "/boot" = {
       device = "/dev/disk/by-uuid/B4B8-7650";
