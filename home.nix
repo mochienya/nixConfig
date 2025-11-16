@@ -24,6 +24,7 @@ extras@{ inputs, pkgs, ... }:
     croc
     ayugram-desktop
     nh
+    gimp3
     inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".twilight
     inputs.copyparty.packages.${pkgs.stdenv.hostPlatform.system}.default
     (

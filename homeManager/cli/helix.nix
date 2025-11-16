@@ -58,6 +58,10 @@
           "keep_primary_selection"
           "collapse_selection"
         ];
+        "g" = {
+          "b" = ["move_prev_word_start" "move_next_word_end"];
+          "B" = ["move_prev_long_word_start" "move_next_long_word_end"];
+        };
       };
       # i wanted to use lazygit too but the escape key doesn't work in the offical docs' recipe
       # and [the issue](https://github.com/helix-editor/helix/issues/13818) was marked as not planned... (neogit is calling)
