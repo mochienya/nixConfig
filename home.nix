@@ -26,10 +26,20 @@ extras@{ inputs, pkgs, ... }:
     nh
     inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".twilight
     inputs.copyparty.packages.${pkgs.stdenv.hostPlatform.system}.default
-    (import (pkgs.fetchzip {
-      url = "https://github.com/Rexcrazy804/nixpkgs/archive/update-equibop.tar.gz";
-      hash = "sha256-aeK4lkMzH1/KHR9c63jfDx+gRpH7w82OzDYMNfw1pok=";
-    }) {inherit (pkgs.stdenv.hostPlatform) system;}).equibop
+    (
+      (pkgs.discord.override (old: {
+        withOpenASAR = true;
+        withEquicord = true;
+        withTTS = false;
+        enableAutoscroll = true;
+      })).overrideAttrs
+      (old: {
+        # it's sometimes that shrimple..
+        postInstall = old.postInstall + ''
+          echo 'require ("/home/mochie/proj/equicord/dist/desktop/patcher.js")' > $out/opt/Discord/resources/app.asar/index.js
+        '';
+      })
+    )
   ];
 
   programs.spicetify =

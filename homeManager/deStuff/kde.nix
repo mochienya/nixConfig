@@ -36,7 +36,7 @@
               "applications:code.desktop"
               "applications:zen-twilight.desktop"
               "applications:kitty.desktop"
-              "applications:equibop.desktop"
+              "applications:discord.desktop"
             ];
           }
           "org.kde.plasma.marginsseparator"
