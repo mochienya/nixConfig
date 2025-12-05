@@ -49,7 +49,7 @@ extras@{ pkgs, ... }:
             "C" = "plugin ouch";
             "<C-y>" = "plugin wl-clipboard";
             "<C-s>" = "plugin what-size";
-            "b" = ''shell -- ripdrag -xnA "$@"'';
+            "b" = ''shell -- ripdrag --and-exit --no-click --all-compact "$@"'';
           };
     };
     settings = {
@@ -73,7 +73,14 @@ extras@{ pkgs, ... }:
             "application/java-archive"
           ];
       opener.extract = [
-        { run = ''ouch d -yd "''${1%%.*}" "$@" ''; }
+        {
+          run = ''
+            for file; do
+              ${pkgs.lib.getExe pkgs.ouch} decompress "$file" --yes &
+            done
+            wait
+          '';
+        }
       ];
     };
   };
