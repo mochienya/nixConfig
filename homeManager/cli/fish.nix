@@ -6,11 +6,14 @@ extras@{ pkgs, ... }:
     functions = {
       nish.body = ''
         argparse -N1 'm/master' -- $argv; or return 1
-        set -f branch "nixos-unstable"
-        set -q _flag_master; and set -f branch "master"
+
+        if set -q _flag_master
+            set -f pkgs "github:NixOS/nixpkgs/master#"$argv
+        else
+            set -f pkgs "nixpkgs#"$argv
+        end
 
         set -fx NIXPKGS_ALLOW_UNFREE 1
-        set -f pkgs "github:NixOS/nixpkgs/$branch#"$argv
         command nix shell --impure $pkgs
       '';
       mpvfuck.body = ''
