@@ -1,30 +1,12 @@
 { pkgs, ... }:
-let
 
-  mochieIosevka = pkgs.stdenv.mkDerivation {
-    name = "MochieIosevka";
-    version = "1.0";
-
-    src = ../../assets;
-
-    installPhase = ''
-      mkdir -p $out/share/fonts/truetype
-      cp -R ./MochieIosevka $out/share/fonts/truetype/MochieIosevka/
-    '';
-  };
-in
 {
   # awesome font!!
   fonts.fontconfig.enable = true;
 
+  # i wanted to make this a derivation but the nunito repo needs some old version of a python library i can't get through nixpkgs
   home.file."/.local/share/fonts/truetype/Nunito/Nunito-VariableFont_wght.ttf".source =
     ../../assets/Nunito-VariableFont_wght.ttf;
-
-  home.packages = with pkgs; [
-    nerd-fonts.symbols-only
-    twitter-color-emoji
-    mochieIosevka
-  ];
 
   programs.plasma.fonts = {
     general = {
