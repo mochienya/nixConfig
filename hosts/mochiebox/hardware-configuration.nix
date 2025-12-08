@@ -22,18 +22,27 @@
     initrd.kernelModules = [ ];
     kernelModules = [ "kvm-amd" ];
     extraModulePackages = [ ];
-    supportedFilesystems = [ "ntfs" ];
   };
 
   # my second ntfs drive
-  #   fileSystems."/mnt/windows" =
-  #   { device = "/dev/disk-by-uuid/C47A48227A481418";
-  #     fsType = "ntfs-3g";
-  #     options = [ "rw" "uid=1000"];
-  #   };
+  boot.supportedFilesystems = [ "ntfs" ];
+  fileSystems."/mnt/windows" = {
+    device = "/dev/disk/by-uuid/C47A48227A481418";
+    fsType = "ntfs3";
+    options = [
+      "defaults"
+      "uid=1000"
+      "gid=1000"
+      "umask=0022"
+      "nofail"
+    ];
+  };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu = {
+    amd.ryzen-smu.enable = true;
+    amd.updateMicrocode = true;
+  };
 
   fileSystems = {
     "/" = {
