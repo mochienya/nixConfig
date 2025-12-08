@@ -10,10 +10,6 @@
     plasma-manager.url = "github:nix-community/plasma-manager";
     yazi.url = "github:sxyazi/yazi";
 
-    nvf = {
-      url = "github:notashelf/nvf";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     copyparty = {
       url = "github:9001/copyparty";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -38,81 +34,47 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      home-manager,
-      ...
-    }@inputs:
+    inputs@{ nixpkgs, ... }:
+
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-      homeConfig = host: {
-        useGlobalPkgs = true;
-        useUserPackages = true;
-        extraSpecialArgs = { inherit inputs host; };
-        users.mochie = import ./home.nix;
+      pkgsConfig = {
+        config = {
+          allowUnfree = true;
+        };
+        overlays = [
+          inputs.emacs-overlay.overlays.default
+        ];
       };
     in
     {
-      formatter.${system} = pkgs.nixfmt-rfc-style;
-      nixosConfigurations.mochiebox = nixpkgs.lib.nixosSystem rec {
-        inherit system;
-        specialArgs = {
-          host = "mochiebox";
-          inherit inputs;
-          master = inputs.master.legacyPackages.${system};
-        };
-        modules = [
-          ./configuration.nix
-          ./hosts/mochiebox/hardware-configuration.nix
-          ./modules/servicesAndEnvVars.nix
-          ./modules/gaming.nix
-          inputs.nix-flatpak.nixosModules.nix-flatpak
-          home-manager.nixosModules.home-manager
-          { home-manager = homeConfig specialArgs.host; }
-        ];
-      };
-      nixosConfigurations.lapmochie = nixpkgs.lib.nixosSystem rec {
-        inherit system;
-        specialArgs = {
-          host = "lapmochie";
-          inherit inputs;
-          master = inputs.master.legacyPackages.${system};
-        };
-        modules = [
-          ./configuration.nix
-          ./modules/servicesAndEnvVars.nix
-          ./modules/gaming.nix
-          ./hosts/lapmochie/hardware-configuration.nix
-          inputs.nix-flatpak.nixosModules.nix-flatpak
-          home-manager.nixosModules.home-manager
-          { home-manager = homeConfig specialArgs.host; }
-        ];
-      };
-      packages.${system}.nyavim =
-        (inputs.nvf.lib.neovimConfiguration {
-          inherit pkgs;
-          # no idea if this is necessary but i didn't want to find out
-          modules = (
-            map (f: f { inherit pkgs; }) [
-              (import ./homeManager/cli/neovim)
-            ]
-          );
-        }).neovim.overrideAttrs
-          (
-            final: old: {
-              meta = {
-                name = "nyavim";
-                homepage = "https://github.com/mochienya/nixConfig/tree/main/homeManager/cli/neovim";
-                description = "mochie's neovim config!! :3";
+      nixosConfigurations = nixpkgs.lib.genAttrs [ "lapmochie" "mochiebox" ] (
+        host:
+        nixpkgs.lib.nixosSystem rec {
+          specialArgs = {
+            inherit host inputs;
+            master = import inputs.master (pkgsConfig // { localSystem = system; });
+          };
+          modules = [
+            ./hosts/${host}/hardware-configuration.nix
+            ./configuration.nix
+            ./modules/servicesAndEnvVars.nix
+            ./modules/gaming.nix
+            inputs.nix-flatpak.nixosModules.nix-flatpak
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                extraSpecialArgs = specialArgs;
+                useUserPackages = true;
+                useGlobalPkgs = true;
+                backupFileExtension = "bak";
+                overwriteBackup = true;
+                users.mochie = import ./home.nix;
               };
+              nixpkgs = pkgsConfig;
             }
-          );
-      apps.${system}.nyavim = {
-        type = "app";
-        program = "${self.packages.${system}.nyavim}/bin/nvim";
-        meta.description = self.packages.${system}.nyavim.meta.description;
-      };
+          ];
+        }
+      );
     };
 }
