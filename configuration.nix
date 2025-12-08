@@ -6,9 +6,21 @@ extras@{ pkgs, ... }:
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.configurationLimit = 10;
+
+  boot.loader = {
+    systemd-boot.enable = false;
+    efi.canTouchEfiVariables = true;
+    grub = {
+      enable = true;
+      efiSupport = true;
+      device = "nodev";
+      configurationLimit = 10;
+      theme = pkgs.sleek-grub-theme.override {
+        withStyle = "dark";
+        withBanner = "boobloader";
+      };
+    };
+  };
 
   networking.hostName = extras.host;
   networking.networkmanager.enable = true;
@@ -46,7 +58,6 @@ extras@{ pkgs, ... }:
   };
   security.sudo.wheelNeedsPassword = false;
 
-  nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
@@ -70,7 +81,6 @@ extras@{ pkgs, ... }:
     dates = "Mon,Wed,Fri,Sun *-*-* 00:00:00";
     options = "--delete-old";
   };
-
 
   nix.registry.master = {
     from = {
