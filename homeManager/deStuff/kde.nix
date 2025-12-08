@@ -33,7 +33,7 @@
           }
           {
             iconTasks.launchers = [
-              "applications:code.desktop"
+              "applications:emacs.desktop"
               "applications:zen-twilight.desktop"
               "applications:kitty.desktop"
               "applications:discord.desktop"
