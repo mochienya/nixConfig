@@ -25,6 +25,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs = rec {
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-stable = nixpkgs;
+      };
+    };
   };
 
   nixConfig = {
