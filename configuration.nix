@@ -87,7 +87,6 @@ extras@{ pkgs, ... }:
 
   environment.systemPackages = with pkgs; [
     git
-    ntfs3g
     ffmpeg-full
     extras.master.yt-dlp
     qbittorrent
