@@ -3,6 +3,7 @@ extras@{ pkgs, ... }:
 {
   imports = [
     ./homeManager/deStuff/iosevkaConfig.nix
+    ./modules/nix.nix
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
@@ -25,6 +26,30 @@ extras@{ pkgs, ... }:
   networking.hostName = extras.host;
   networking.networkmanager.enable = true;
   networking.firewall.enable = false; # i HATE security!!!
+  networking.enableIPv6 = false;
+
+  networking.nameservers = [
+    "1.1.1.1"
+    "8.8.8.8"
+    "1.0.0.1"
+    "8.8.4.4"
+  ];
+
+  boot.kernelModules = [ "tcp_bbr" ];
+  boot.kernel.sysctl = {
+    "net.ipv4.tcp_congestion_control" = "bbr";
+    "net.core.default_qdisc" = "fq";
+    "net.core.rmem_max" = 4194304;
+    "net.core.wmem_max" = 4194304;
+    "net.core.somaxconn" = 4096;
+  };
+
+  services.resolved = {
+    enable = true;
+    dnssec = "true";
+    domains = [ "~." ];
+    fallbackDns = [ "1.1.1.1" "1.0.0.1" ];
+  };
 
   networking.timeServers = [
     "0.pool.ntp.org"
@@ -57,43 +82,6 @@ extras@{ pkgs, ... }:
     shell = pkgs.fish;
   };
   security.sudo.wheelNeedsPassword = false;
-
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-  nix.nixPath = [ "nixpkgs=${extras.inputs.nixpkgs}" ];
-
-  nix.settings = {
-    trusted-users = [ "mochie" ];
-    substituters = [
-      "https://cache.nixos.org"
-      "https://nix-community.cachix.org"
-    ];
-    trusted-public-keys = [
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    ];
-  };
-
-  nix.settings.auto-optimise-store = true;
-  nix.gc = {
-    automatic = true;
-    dates = "Mon,Wed,Fri,Sun *-*-* 00:00:00";
-    options = "--delete-old";
-  };
-
-  nix.registry.master = {
-    from = {
-      type = "indirect";
-      id = "master";
-    };
-    to = {
-      type = "github";
-      owner = "NixOS";
-      repo = "nixpkgs";
-      ref = "master";
-    };
-  };
 
   environment.systemPackages = with pkgs; [
     git
