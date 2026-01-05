@@ -26,7 +26,11 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/5fc467ab-19db-4f64-820a-34417d8ad3d6";
     fsType = "btrfs";
-    options = [ "subvol=@" "noatime" "compress=zstd:5" ];
+    options = [
+      "subvol=@"
+      "noatime"
+      "compress=zstd:5"
+    ];
   };
 
   fileSystems."/boot" = {
@@ -82,7 +86,7 @@
     modesetting.enable = true;
     powerManagement.enable = true;
     powerManagement.finegrained = true;
-    package = config.boot.kernelPackages.nvidiaPackages.production;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
     open = true;
     nvidiaSettings = true;
     prime = {
@@ -94,6 +98,38 @@
         offloadCmdMainProgram = "dgpu";
       };
     };
+  };
+
+  services.hardware.bolt.enable = true;
+
+  # egpu!! (rip pascal series...)
+  specialisation."egpu".configuration = {
+    system.nixos.tags = [ "egpu" ];
+
+    hardware.nvidia = {
+      powerManagement.enable = lib.mkForce false;
+      powerManagement.finegrained = lib.mkForce false;
+      open = lib.mkForce false;
+      package = lib.mkForce config.boot.kernelPackages.nvidiaPackages.production;
+      nvidiaSettings = lib.mkForce true;
+      nvidiaPersistenced = true;
+      prime = {
+        nvidiaBusId = lib.mkForce "PCI:5:0:0";
+        allowExternalGpu = lib.mkForce true;
+        # TODO: pr nixpkgs so this uses your configured nvidia gpu and not just the first one
+        offload.enableOffloadCmd = lib.mkForce false;
+      };
+    };
+
+    environment.systemPackages = [
+      (pkgs.writeShellScriptBin "dgpu" ''
+        export __NV_PRIME_RENDER_OFFLOAD=1
+        export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G1
+        export __GLX_VENDOR_LIBRARY_NAME=nvidia
+        export __VK_LAYER_NV_optimus=NVIDIA_only
+        exec "$@"
+      '')
+    ];
   };
 
   # trying to make it not run like shit (I HATE AGGRESSIVE POWER MANAGEMENT IN MODERN LAPTOPS!!)
