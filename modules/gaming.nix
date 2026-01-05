@@ -31,6 +31,10 @@
           gamemode
         ];
     })
+    (prismlauncher.override {
+      jdks = [ openjdk25 ];
+      textToSpeechSupport = false;
+    })
     protonup-rs
     r2modman
   ];
