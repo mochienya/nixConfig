@@ -15,7 +15,7 @@ extras@{ pkgs, ... }:
       enable = true;
       efiSupport = true;
       device = "nodev";
-      configurationLimit = 10;
+      configurationLimit = 20;
       theme = pkgs.sleek-grub-theme.override {
         withStyle = "dark";
         withBanner = "boobloader";

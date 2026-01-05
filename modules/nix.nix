@@ -26,12 +26,6 @@
     warn-dirty = false;
   };
 
-  nix.gc = {
-    automatic = true;
-    dates = "Mon,Wed,Fri,Sun *-*-* 00:00:00";
-    options = "--delete-old";
-  };
-
   nix.registry.master = {
     from = {
       type = "indirect";
