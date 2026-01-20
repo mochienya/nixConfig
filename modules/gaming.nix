@@ -1,6 +1,10 @@
 { pkgs, ... }:
 
 {
+  imports = [
+    ./beamng.nix
+  ];
+
   programs.steam = {
     enable = true;
     extraCompatPackages = with pkgs; [
