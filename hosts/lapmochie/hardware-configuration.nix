@@ -9,6 +9,7 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
+    ./audio.nix
   ];
 
   boot.initrd.availableKernelModules = [
