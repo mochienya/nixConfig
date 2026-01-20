@@ -2,7 +2,7 @@ extras@{ pkgs, ... }:
 
 {
   imports = [
-    ./homeManager/deStuff/iosevkaConfig.nix
+    ./home-manager/niri/iosevka-config.nix
     ./modules/nix.nix
   ];
 

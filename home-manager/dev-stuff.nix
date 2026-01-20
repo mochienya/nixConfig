@@ -8,7 +8,7 @@
     pnpm
     nodejs_latest
     bun
-    nixfmt-rfc-style
+    nixfmt
     direnv
     devenv
     lazygit
