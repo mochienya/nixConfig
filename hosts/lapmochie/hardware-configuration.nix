@@ -10,6 +10,7 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ./audio.nix
+    ./fingerprint.nix
   ];
 
   boot.initrd.availableKernelModules = [
@@ -53,13 +54,6 @@
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   hardware.bluetooth.enable = true;
-
-  # finger pint
-  systemd.services.fprintd = {
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig.Type = "simple";
-  };
-  services.fprintd.enable = true;
 
   # igpu improvement(?)
   hardware.graphics = {
