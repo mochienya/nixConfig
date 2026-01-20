@@ -11,17 +11,18 @@ extras@{ inputs, pkgs, ... }:
   imports = [
     inputs.spicetify-nix.homeManagerModules.default
     extras.inputs.plasma-manager.homeModules.plasma-manager
-    ./homeManager/devStuff.nix
-    ./homeManager/cliStuff.nix
-    ./homeManager/cli
-    ./homeManager/mpv.nix
-    ./homeManager/deStuff/fontsAndColors.nix
-    ./homeManager/deStuff/kde.nix
+    ./home-manager/dev-stuff.nix
+    ./home-manager/cli-stuff.nix
+    ./home-manager/cli
+    ./home-manager/mpv.nix
+    ./home-manager/niri/fonts-and-colors.nix
+    ./home-manager/niri/kde.nix
   ];
 
   home.packages = with pkgs; [
     syncplay
     croc
+    wget
     ayugram-desktop
     nh
     gimp3
