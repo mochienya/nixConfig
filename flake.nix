@@ -42,8 +42,8 @@
         config = {
           allowUnfree = true;
         };
-        overlays = [
-          inputs.emacs-overlay.overlays.default
+        overlays = with inputs; [
+          emacs-overlay.overlays.default
         ];
       };
     in
