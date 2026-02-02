@@ -43,6 +43,7 @@
         name = "mochie~!";
         email = "187453775+mochienya@users.noreply.github.com";
       };
+      github.user = "mochienya";
     };
   };
 }
