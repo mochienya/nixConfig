@@ -1,7 +1,8 @@
 { pkgs, ... }:
 
 {
-  environment.systemPackages = [
+  environment.systemPackages = with pkgs; [
+    beammp-launcher
     (
       let
         libraryPath =
