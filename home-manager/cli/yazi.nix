@@ -4,6 +4,7 @@ extras@{ pkgs, ... }:
   programs.yazi = {
     enable = true;
     package = extras.inputs.yazi.packages.${pkgs.stdenv.hostPlatform.system}.yazi;
+    shellWrapperName = "yy";
     plugins =
       let
         mkPlugin =
@@ -33,7 +34,7 @@ extras@{ pkgs, ... }:
         what-size = mkPlugin {
           author = "pirafrank";
           repo = "what-size.yazi";
-          hash = "sha256-s2BifzWr/uewDI6Bowy7J+5LrID6I6OFEA5BrlOPNcM=";
+          hash = "sha256-7q/45TopqbojNRvYDmP9+hgSGPmiyLHBcV051qpOB2Y=";
         };
       };
     keymap = {
