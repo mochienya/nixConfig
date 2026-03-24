@@ -91,7 +91,6 @@ extras@{ pkgs, ... }:
     enable = true;
     extraPortals = with pkgs; [
       xdg-desktop-portal-termfilechooser
-      kdePackages.xdg-desktop-portal-kde
     ];
     config.common = {
       "org.freedesktop.impl.portal.FileChooser" = "termfilechooser";

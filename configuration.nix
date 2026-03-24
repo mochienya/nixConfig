@@ -1,8 +1,8 @@
-extras@{ pkgs, ... }:
+extras@{ pkgs, lib, ... }:
 
 {
   imports = [
-    ./home-manager/niri/iosevka-config.nix
+    ./home-manager/iosevka-config.nix
     ./modules/nix.nix
   ];
 
@@ -65,8 +65,20 @@ extras@{ pkgs, ... }:
   time.timeZone = null;
   services.automatic-timezoned.enable = true;
   i18n.defaultLocale = "en_US.UTF-8";
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
+
+  programs.hyprland.enable = true;
+  home-manager.users.mochie =
+    { config, ... }:
+    {
+      xdg.configFile."hypr" = {
+        source = config.lib.file.mkOutOfStoreSymlink /home/mochie/nixConfig/hyprland/main;
+        recursive = true;
+      };
+      xdg.configFile."hypr-host/host.conf".source =
+        config.lib.file.mkOutOfStoreSymlink /home/mochie/nixConfig/hyprland/${extras.host}.conf;
+    };
+  services.displayManager.ly.enable = true;
+
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {

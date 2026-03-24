@@ -7,8 +7,10 @@
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
-    plasma-manager.url = "github:nix-community/plasma-manager";
     yazi.url = "github:sxyazi/yazi";
+    # niri still doesn't support enough features for me to use it and i don't feel like learning freedesktop nonsense
+    # sorry sweaty...
+    hyprland.url = "github:hyprwm/Hyprland";
 
     copyparty = {
       url = "github:9001/copyparty";
@@ -29,8 +31,14 @@
 
   nixConfig = {
     # caches here are for packages only my system uses, anything useful for other flakes should go in the configuration.nix one
-    extra-substituters = [ "https://yazi.cachix.org" ];
-    extra-trusted-public-keys = [ "yazi.cachix.org-1:Dcdz63NZKfvUCbDGngQDAZq6kOroIrFoyO064uvLh8k=" ];
+    extra-substituters = [
+      "https://yazi.cachix.org"
+      "https://hyprland.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "yazi.cachix.org-1:Dcdz63NZKfvUCbDGngQDAZq6kOroIrFoyO064uvLh8k="
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+    ];
   };
 
   outputs =
@@ -61,6 +69,7 @@
             ./modules/servicesAndEnvVars.nix
             ./modules/gaming.nix
             inputs.nix-flatpak.nixosModules.nix-flatpak
+            inputs.hyprland.nixosModules.default
             inputs.home-manager.nixosModules.home-manager
             {
               home-manager = {
