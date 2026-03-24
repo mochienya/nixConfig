@@ -49,4 +49,11 @@
       github.user = "mochienya";
     };
   };
+
+  programs.lazygit = {
+    enable = true;
+    settings = {
+      gui.mainPanelSplitMode = "vertical";
+    };
+  };
 }
