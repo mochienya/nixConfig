@@ -36,7 +36,10 @@
 
   programs.git = {
     enable = true;
-    signing.key = "7A49511084F4EAF1BE305CF0CC3BE964564F9554";
+    signing = {
+      key = "7A49511084F4EAF1BE305CF0CC3BE964564F9554";
+      format = "openpgp";
+    };
     settings = {
       pull.rebase = true;
       user = {
