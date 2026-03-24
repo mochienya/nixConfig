@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, pkgs, host, ... }:
 {
   environment.sessionVariables = {
     NIXOS_OZONE_WL = 1;
@@ -31,15 +31,29 @@
     '';
   };
 
-  services.keyd.enable = true;
-  services.keyd.keyboards = {
-    "default" = {
+  # fixes unicode support
+  home-manager.users.mochie.home.file.".XCompose".source = "${pkgs.keyd}/share/keyd/keyd.compose";
+  services.keyd = {
+    enable = true;
+    keyboards.default = {
       ids = [ "*" ];
       settings = {
         main = {
           capslock = "escape";
           escape = "capslock";
+          "102nd" = "oneshot(norwegian)";
         };
+        norwegian = {
+          a = "å";
+          e = "æ";
+          o = "ø";
+        };
+        "norwegian+shift" = {
+          a = "Å";
+          e = "Æ";
+          o = "Ø";
+        };
+        "meta+shift".f23 = lib.optionalString (host == "lapmochie") "macro(You're space absolutely space correct!)";
       };
     };
   };
