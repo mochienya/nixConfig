@@ -17,14 +17,14 @@
             atk
             cups
             libdrm
-            xorg.libX11
-            xorg.libXcomposite
-            xorg.libXdamage
-            xorg.libXext
-            xorg.libXfixes
-            xorg.libXrandr
+            libx11
+            libxcomposite
+            libxdamage
+            libxext
+            libxfixes
+            libxrandr
             libgbm
-            xorg.libxcb
+            libxcb
             libxkbcommon
             pango
             cairo
@@ -33,6 +33,7 @@
             libglvnd
           ];
       in
+      # to be executed by steam launch args
       pkgs.writeScriptBin "launch-beamng" ''
         #!/usr/bin/env ${pkgs.lib.getExe pkgs.bash}
 
