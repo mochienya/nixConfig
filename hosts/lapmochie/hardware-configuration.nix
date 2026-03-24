@@ -25,6 +25,20 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  # windows partition owo
+  boot.supportedFilesystems = [ "ntfs" ];
+  fileSystems."/mnt/windows" = {
+    device = "/dev/disk/by-uuid/4A5853EF5853D7F1";
+    fsType = "ntfs";
+    options = [
+      "defaults"
+      "uid=1000"
+      "gid=1000"
+      "umask=0022"
+      "nofail"
+    ];
+  };
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/5fc467ab-19db-4f64-820a-34417d8ad3d6";
     fsType = "btrfs";
