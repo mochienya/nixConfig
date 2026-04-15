@@ -33,6 +33,12 @@ extras@{ pkgs, ... }:
       nfu = "nix flake update";
       udrbsd = "nh os boot ~/nixConfig -uH ${extras.host} && sudo shutdown now";
     };
+    shellAbbrs = {
+      bgs = {
+        expansion = "&> /dev/null &; disown";
+        position = "anywhere";
+      };
+    };
     plugins = with pkgs.fishPlugins; [
       {
         name = "autopair";
