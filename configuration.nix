@@ -1,9 +1,11 @@
-extras@{ pkgs, lib, ... }:
+# TODO: change all of these headers to `args@{ pkgs, ... }:`
+args@{ pkgs, ... }:
 
 {
   imports = [
     ./home-manager/iosevka-config.nix
     ./modules/nix.nix
+    ./hyprland
   ];
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
@@ -23,7 +25,7 @@ extras@{ pkgs, lib, ... }:
     };
   };
 
-  networking.hostName = extras.host;
+  networking.hostName = args.host;
   networking.networkmanager.enable = true;
   networking.firewall.enable = false; # i HATE security!!!
   networking.enableIPv6 = false;
@@ -66,19 +68,6 @@ extras@{ pkgs, lib, ... }:
   services.automatic-timezoned.enable = true;
   i18n.defaultLocale = "en_US.UTF-8";
 
-  programs.hyprland.enable = true;
-  home-manager.users.mochie =
-    { config, ... }:
-    {
-      xdg.configFile."hypr" = {
-        source = config.lib.file.mkOutOfStoreSymlink /home/mochie/nixConfig/hyprland/main;
-        recursive = true;
-      };
-      xdg.configFile."hypr-host/host.conf".source =
-        config.lib.file.mkOutOfStoreSymlink /home/mochie/nixConfig/hyprland/${extras.host}.conf;
-    };
-  services.displayManager.ly.enable = true;
-
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -103,12 +92,24 @@ extras@{ pkgs, lib, ... }:
   environment.systemPackages = with pkgs; [
     git
     ffmpeg-full
-    extras.master.yt-dlp
+    args.master.yt-dlp
     qbittorrent
     signal-desktop
     rar
     wl-clipboard
-  ];
+
+    # tmp for no internert wawa
+  ] ++ (with args.master; [
+    zig_0_16
+    zls_0_16
+  ]) ++ (with args.master.beam28Packages; [
+    elixir_1_20
+    elixir-ls
+    expert
+    erlang
+    hex
+    ex_doc
+  ]);
 
   system.stateVersion = "25.05";
 }
