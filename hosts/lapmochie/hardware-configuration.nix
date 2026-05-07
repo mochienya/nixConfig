@@ -11,6 +11,8 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     ./audio.nix
     ./fingerprint.nix
+    ./fwupd.nix
+    ./gpu.nix
   ];
 
   boot.initrd.availableKernelModules = [
@@ -22,7 +24,10 @@
     "rtsx_pci_sdmmc"
   ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [
+    "kvm-intel"
+    "coretemp"
+  ];
   boot.extraModulePackages = [ ];
 
   # windows partition owo
@@ -68,84 +73,19 @@
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   hardware.bluetooth.enable = true;
-
-  # igpu improvement(?)
-  hardware.graphics = {
-    enable = true;
-    extraPackages = with pkgs; [
-      intel-media-driver
-      intel-compute-runtime
-      vpl-gpu-rt
-    ];
-    extraPackages32 = with pkgs.driversi686Linux; [
-      intel-media-driver
-    ];
-  };
-
-  environment.sessionVariables = {
-    LIBVA_DRIVER_NAME = "iHD";
-  };
-
-  # honestly scared of trying to use the dgpu in my laptop but the igpu can't decode 4k without frame drops
-  services.xserver.videoDrivers = [
-    "modesetting"
-    "nvidia"
-  ];
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = true;
-    powerManagement.finegrained = true;
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
-    open = true;
-    nvidiaSettings = true;
-    prime = {
-      nvidiaBusId = "PCI:1:0:0";
-      intelBusId = "PCI:0:2:0";
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-        offloadCmdMainProgram = "dgpu";
-      };
-    };
-  };
-
   services.hardware.bolt.enable = true;
-
-  # egpu!! (rip pascal series...)
-  specialisation."egpu".configuration = {
-    system.nixos.tags = [ "egpu" ];
-
-    hardware.nvidia = {
-      powerManagement.enable = lib.mkForce false;
-      powerManagement.finegrained = lib.mkForce false;
-      open = lib.mkForce false;
-      package = lib.mkForce config.boot.kernelPackages.nvidiaPackages.production;
-      nvidiaSettings = lib.mkForce true;
-      nvidiaPersistenced = true;
-      prime = {
-        nvidiaBusId = lib.mkForce "PCI:5:0:0";
-        allowExternalGpu = lib.mkForce true;
-        # TODO: pr nixpkgs so this uses your configured nvidia gpu and not just the first one
-        offload.enableOffloadCmd = lib.mkForce false;
-      };
-    };
-
-    environment.systemPackages = [
-      (pkgs.writeShellScriptBin "dgpu" ''
-        export __NV_PRIME_RENDER_OFFLOAD=1
-        export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G1
-        export __GLX_VENDOR_LIBRARY_NAME=nvidia
-        export __VK_LAYER_NV_optimus=NVIDIA_only
-        exec "$@"
-      '')
-    ];
-  };
 
   # trying to make it not run like shit (I HATE AGGRESSIVE POWER MANAGEMENT IN MODERN LAPTOPS!!)
   powerManagement.cpuFreqGovernor = "performance";
   services.throttled.enable = true;
   services.power-profiles-daemon.enable = false;
-  environment.systemPackages = [ pkgs.auto-cpufreq ];
+  environment.systemPackages = with pkgs; [
+    (lm_sensors.override { sensord = true; })
+    auto-cpufreq
+  ];
+  hardware.fancontrol = {
+    # enable = true;
+  };
   services.auto-cpufreq.enable = true;
   services.auto-cpufreq.settings = {
     charger = {

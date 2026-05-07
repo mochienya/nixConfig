@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+args@{ pkgs, ... }:
 
 {
   imports = [
@@ -11,10 +11,46 @@
       proton-ge-bin
     ];
     extraPackages = with pkgs; [
-      gamescope
       gamemode
+      mangohud
+      # supposedly helps with beamng drive
+      nss
+      curl
     ];
+    gamescopeSession = {
+      enable = true;
+      args = [
+        "--max-scale"
+        "1"
+        "--backend"
+        "sdl"
+        "--force-windows-fullscreen"
+        "--mangoapp"
+        "--nested-unfocused-refresh"
+        "5"
+        "--fullscreen"
+        "--expose-wayland"
+      ]
+      ++ (args.lib.optionals (args.host == "lapmochie") [
+        "-W"
+        "1920"
+        "-H"
+        "1200"
+        "-w"
+        "1920"
+        "-h"
+        "1200"
+        "--nested-refresh"
+        "60"
+        "--prefer-output"
+        "eDP-1"
+        "--prefer-vk-device"
+        "10de:28ba"
+      ]);
+    };
   };
+  programs.gamescope.capSysNice = true;
+
   services.flatpak = {
     enable = true;
     packages = [
@@ -41,6 +77,7 @@
     })
     protonup-rs
     r2modman
+    mangohud
   ];
 
   programs.gamemode = {
