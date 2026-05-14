@@ -13,6 +13,8 @@ args@{ pkgs, ... }:
     progress
     ouch
     ripdrag
+    wget2
+    croc
     args.inputs.copyparty.packages.${args.pkgs.stdenv.hostPlatform.system}.default
   ];
 

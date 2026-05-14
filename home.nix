@@ -19,8 +19,6 @@ args@{ pkgs, ... }:
 
   home.packages = with args.pkgs; [
     syncplay
-    croc
-    wget
     ayugram-desktop
     nh
     gimp3
