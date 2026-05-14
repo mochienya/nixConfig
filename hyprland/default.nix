@@ -1,7 +1,16 @@
 extras@{ ... }:
 
 {
-  programs.hyprland.enable = true;
+  # packages hyprland config uses
+  environment.systemPackages = with pkgs; [
+    satty
+    grim
+    playerctl
+  ];
+
+  programs.hyprland = {
+    enable = true;
+  };
 
   home-manager.users.mochie =
     { config, ... }:
