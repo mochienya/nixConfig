@@ -1,13 +1,9 @@
-{
-  config,
-  lib,
-  modulesPath,
-  ...
-}:
+args@{ pkgs, ... }:
 
 {
   imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
+    ./gpu.nix
+    ./fs.nix
   ];
 
   boot = {
@@ -24,65 +20,27 @@
     extraModulePackages = [ ];
   };
 
-  # my second ntfs drive
-  boot.supportedFilesystems = [ "ntfs" ];
-  fileSystems."/mnt/windows" = {
-    device = "/dev/disk/by-uuid/C47A48227A481418";
-    fsType = "ntfs3";
-    options = [
-      "defaults"
-      "uid=1000"
-      "gid=1000"
-      "umask=0022"
-      "nofail"
-    ];
+
+
+  nixpkgs.hostPlatform = "x86_64-linux";
+  hardware.cpu.amd = {
+    ryzen-smu.enable = true;
+    updateMicrocode = true;
   };
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu = {
-    amd.ryzen-smu.enable = true;
-    amd.updateMicrocode = true;
-  };
-
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-uuid/7c4226d8-a60d-4fa3-940c-e5db45d79f95";
-      fsType = "btrfs";
-      options = [ "subvol=@" ];
-    };
-    "/boot" = {
-      device = "/dev/disk/by-uuid/B4B8-7650";
-      fsType = "vfat";
-      options = [
-        "fmask=0077"
-        "dmask=0077"
-      ];
-    };
-
-  };
-
-  swapDevices = [ ];
   zramSwap = {
     enable = true;
     algorithm = "zstd";
   };
 
-  networking.useDHCP = lib.mkDefault true;
+  fonts.fontconfig = {
+    antialias = true;
+    hinting.enable = false;
+    subpixel.lcdfilter = "none";
+  };
+
+  networking.useDHCP = args.lib.mkDefault true;
   networking.interfaces.enp9s0.wakeOnLan.enable = true;
 
   hardware.bluetooth.enable = true;
-
-  # not too fond of green gpu
-  hardware.graphics.enable = true;
-  services.xserver.videoDrivers = [
-    "nvidia"
-    "modesetting"
-  ];
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = true;
-    powerManagement.finegrained = false;
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
-    open = false;
-  };
 }
