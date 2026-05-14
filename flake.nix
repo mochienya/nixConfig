@@ -72,7 +72,7 @@
           modules = [
             ./hosts/${host}/hardware-configuration.nix
             ./configuration.nix
-            ./modules/servicesAndEnvVars.nix
+            ./modules/services-and-envvars.nix
             ./modules/gaming.nix
             inputs.nix-flatpak.nixosModules.nix-flatpak
             inputs.hyprland.nixosModules.default

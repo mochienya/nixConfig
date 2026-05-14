@@ -1,4 +1,5 @@
-{ pkgs, ... }:
+args@{ pkgs, ... }:
+
 let
   auto-sub =
     let
@@ -8,7 +9,7 @@ let
         end)
       '';
     in
-    pkgs.mpvScripts.buildLua {
+    args.pkgs.mpvScripts.buildLua {
       pname = "auto-sub";
       version = "1.0.0";
       src = file;
@@ -24,7 +25,7 @@ let
         mp.add_key_binding(nil, "seek_end", seek_end)
       '';
     in
-    pkgs.mpvScripts.buildLua {
+    args.pkgs.mpvScripts.buildLua {
       pname = "seek-end";
       version = "1.0.0";
       src = file;
@@ -74,7 +75,7 @@ in
       "`" = "script-binding console/enable";
     };
     scripts =
-      with pkgs.mpvScripts;
+      with args.pkgs.mpvScripts;
       [
         mpv-osc-tethys
         thumbfast

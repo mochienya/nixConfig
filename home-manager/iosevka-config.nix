@@ -1,11 +1,7 @@
-{
-  pkgs,
-  lib,
-  ...
-}:
+args@{ pkgs, ... }:
 
 {
-  fonts.packages = with pkgs; [
+  fonts.packages = with args.pkgs; [
     nerd-fonts.symbols-only
     twitter-color-emoji
     (
@@ -126,7 +122,7 @@
             };
           */
           weights =
-            lib.mapAttrs
+            args.lib.mapAttrs
               (_: v: {
                 shape = v;
                 menu = v;

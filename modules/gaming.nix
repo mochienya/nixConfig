@@ -7,10 +7,10 @@ args@{ pkgs, ... }:
 
   programs.steam = {
     enable = true;
-    extraCompatPackages = with pkgs; [
+    extraCompatPackages = with args.pkgs; [
       proton-ge-bin
     ];
-    extraPackages = with pkgs; [
+    extraPackages = with args.pkgs; [
       gamemode
       mangohud
       # supposedly helps with beamng drive
@@ -62,7 +62,7 @@ args@{ pkgs, ... }:
     update.onActivation = true;
     uninstallUnmanaged = true;
   };
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with args.pkgs; [
     (lutris.override {
       extraPkgs =
         ps: with ps; [

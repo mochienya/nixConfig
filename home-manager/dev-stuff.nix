@@ -1,6 +1,7 @@
-{ pkgs, ... }:
+args@{ pkgs, ... }:
+
 {
-  home.packages = with pkgs; [
+  home.packages = with args.pkgs; [
     zed-editor
     micro
     vscode
@@ -22,7 +23,7 @@
     enable = true;
     enableScDaemon = false;
     enableExtraSocket = true;
-    pinentry.package = pkgs.pinentry-curses;
+    pinentry.package = args.pkgs.pinentry-curses;
   };
 
   programs.ssh = {

@@ -1,14 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  modulesPath,
-  ...
-}:
+args@{ pkgs, ... }:
 
 {
   imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
     ./audio.nix
     ./fingerprint.nix
     ./fwupd.nix
@@ -67,10 +60,10 @@
 
   swapDevices = [ ];
 
-  networking.useDHCP = lib.mkDefault true;
+  networking.useDHCP = args.lib.mkDefault true;
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  nixpkgs.hostPlatform = args.lib.mkDefault "x86_64-linux";
+  hardware.cpu.intel.updateMicrocode = args.lib.mkDefault args.config.hardware.enableRedistributableFirmware;
 
   hardware.bluetooth.enable = true;
   services.hardware.bolt.enable = true;
@@ -79,7 +72,7 @@
   powerManagement.cpuFreqGovernor = "performance";
   services.throttled.enable = true;
   services.power-profiles-daemon.enable = false;
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with args.pkgs; [
     (lm_sensors.override { sensord = true; })
     auto-cpufreq
   ];

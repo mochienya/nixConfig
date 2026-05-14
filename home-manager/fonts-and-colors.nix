@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+args@{ pkgs, ... }:
 
 {
   # awesome font!!
@@ -11,7 +11,7 @@
   home.pointerCursor = rec {
     enable = true;
     hyprcursor.enable = true;
-    package = pkgs.bibata-cursors;
+    package = args.pkgs.bibata-cursors;
     name = "Bibata-Modern-Classic";
     size = 24;
     x11 = {

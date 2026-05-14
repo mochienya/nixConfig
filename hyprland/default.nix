@@ -1,8 +1,8 @@
-extras@{ ... }:
+args@{ pkgs, ... }:
 
 {
   # packages hyprland config uses
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with args.pkgs; [
     satty
     grim
     playerctl
@@ -20,7 +20,7 @@ extras@{ ... }:
         recursive = true;
       };
       xdg.configFile."hypr-host/host.conf".source =
-        config.lib.file.mkOutOfStoreSymlink /home/mochie/nixConfig/hyprland/${extras.host}.conf;
+        config.lib.file.mkOutOfStoreSymlink /home/mochie/nixConfig/hyprland/${args.host}.conf;
     };
 
   services.displayManager.ly.enable = true;

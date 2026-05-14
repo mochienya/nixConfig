@@ -1,4 +1,5 @@
-{ ... }:
+args@{ pkgs, ... }:
+
 {
   imports = [
     ./starship.nix

@@ -1,4 +1,4 @@
-extras@{ inputs, pkgs, ... }:
+args@{ pkgs, ... }:
 
 {
   home = {
@@ -9,7 +9,7 @@ extras@{ inputs, pkgs, ... }:
   programs.home-manager.enable = true;
 
   imports = [
-    inputs.spicetify-nix.homeManagerModules.default
+    args.inputs.spicetify-nix.homeManagerModules.default
     ./home-manager/dev-stuff.nix
     ./home-manager/cli-stuff.nix
     ./home-manager/cli
@@ -17,17 +17,16 @@ extras@{ inputs, pkgs, ... }:
     ./home-manager/fonts-and-colors.nix
   ];
 
-  home.packages = with pkgs; [
+  home.packages = with args.pkgs; [
     syncplay
     croc
     wget
     ayugram-desktop
     nh
     gimp3
-    inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".twilight
-    inputs.copyparty.packages.${pkgs.stdenv.hostPlatform.system}.default
+    args.inputs.zen-browser.packages."${args.pkgs.stdenv.hostPlatform.system}".twilight
     (
-      (pkgs.discord.override (old: {
+      (args.pkgs.discord.override (old: {
         withOpenASAR = true;
         withEquicord = true;
         withTTS = false;
@@ -44,7 +43,7 @@ extras@{ inputs, pkgs, ... }:
 
   programs.spicetify =
     let
-      spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+      spicePkgs = args.inputs.spicetify-nix.legacyPackages.${args.pkgs.stdenv.hostPlatform.system};
     in
     {
       enable = true;

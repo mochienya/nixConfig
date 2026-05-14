@@ -1,4 +1,3 @@
-# TODO: change all of these headers to `args@{ pkgs, ... }:`
 args@{ pkgs, ... }:
 
 {
@@ -8,7 +7,7 @@ args@{ pkgs, ... }:
     ./hyprland
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelPackages = args.pkgs.linuxPackages_zen;
 
   boot.loader = {
     systemd-boot.enable = false;
@@ -18,7 +17,7 @@ args@{ pkgs, ... }:
       efiSupport = true;
       device = "nodev";
       configurationLimit = 20;
-      theme = pkgs.sleek-grub-theme.override {
+      theme = args.pkgs.sleek-grub-theme.override {
         withStyle = "dark";
         withBanner = "boobloader";
       };
@@ -85,11 +84,11 @@ args@{ pkgs, ... }:
       "wheel"
       "gamemode"
     ];
-    shell = pkgs.fish;
+    shell = args.pkgs.fish;
   };
   security.sudo.wheelNeedsPassword = false;
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with args.pkgs; [
     git
     ffmpeg-full
     args.master.yt-dlp

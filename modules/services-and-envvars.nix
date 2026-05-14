@@ -1,4 +1,5 @@
-{ lib, pkgs, host, ... }:
+args@{ pkgs, ... }:
+
 {
   environment.sessionVariables = {
     NIXOS_OZONE_WL = 1;
@@ -32,7 +33,7 @@
   };
 
   # fixes unicode support
-  home-manager.users.mochie.home.file.".XCompose".source = "${pkgs.keyd}/share/keyd/keyd.compose";
+  home-manager.users.mochie.home.file.".XCompose".source = "${args.pkgs.keyd}/share/keyd/keyd.compose";
   services.keyd = {
     enable = true;
     keyboards.default = {
@@ -53,7 +54,7 @@
           e = "Æ";
           o = "Ø";
         };
-        "meta+shift".f23 = lib.optionalString (host == "lapmochie") "macro(You're space absolutely space correct!)";
+        "meta+shift".f23 = args.lib.optionalString (args.host == "lapmochie") "macro(You're space absolutely space correct!)";
       };
     };
   };

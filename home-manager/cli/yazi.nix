@@ -1,9 +1,9 @@
-extras@{ pkgs, ... }:
+args@{ pkgs, ... }:
 
 {
   programs.yazi = {
     enable = true;
-    package = extras.inputs.yazi.packages.${pkgs.stdenv.hostPlatform.system}.yazi;
+    package = args.inputs.yazi.packages.${args.pkgs.stdenv.hostPlatform.system}.yazi;
     shellWrapperName = "yy";
     plugins =
       let
@@ -12,19 +12,19 @@ extras@{ pkgs, ... }:
             author,
             repo,
             rev ? "main",
-            hash ? pkgs.lib.fakeHash,
+            hash ? args.lib.fakeHash,
             version ? "unstable",
           }:
-          pkgs.yaziPlugins.mkYaziPlugin {
+          args.pkgs.yaziPlugins.mkYaziPlugin {
             inherit version;
             pname = repo;
-            src = pkgs.fetchFromGitHub {
+            src = args.pkgs.fetchFromGitHub {
               inherit repo hash rev;
               owner = author;
             };
           };
       in
-      with pkgs.yaziPlugins;
+      with args.pkgs.yaziPlugins;
       {
         inherit
           smart-filter
@@ -40,7 +40,7 @@ extras@{ pkgs, ... }:
     keymap = {
       # each entry in the attr gets turned into `{on = <lhs>; run = <rhs>;}` in a list
       mgr.prepend_keymap =
-        pkgs.lib.mapAttrsToList
+        args.lib.mapAttrsToList
           (k: v: {
             on = k;
             run = v;
@@ -77,7 +77,7 @@ extras@{ pkgs, ... }:
         {
           run = ''
             for file; do
-              ${pkgs.lib.getExe pkgs.ouch} decompress "$file" --yes &
+              ${args.lib.getExe args.pkgs.ouch} decompress "$file" --yes &
             done
             wait
           '';
@@ -86,10 +86,9 @@ extras@{ pkgs, ... }:
     };
   };
 
-  # #region yazi file picker
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs; [
+    extraPortals = with args.pkgs; [
       xdg-desktop-portal-termfilechooser
     ];
     config.common = {
@@ -101,12 +100,11 @@ extras@{ pkgs, ... }:
   };
   xdg.configFile."xdg-desktop-portal-termfilechooser/config" = {
     force = true;
-    text = pkgs.lib.generators.toINI { } {
-      filechooser.cmd = "${pkgs.xdg-desktop-portal-termfilechooser}/share/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh";
+    text = args.lib.generators.toINI { } {
+      filechooser.cmd = "${args.pkgs.xdg-desktop-portal-termfilechooser}/share/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh";
     };
   };
   xdg.mimeApps.defaultApplications = {
     "inode/directory" = "yazi.desktop";
   };
-  # #endregion
 }

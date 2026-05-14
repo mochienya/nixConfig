@@ -1,6 +1,7 @@
-extras@{ pkgs, ... }:
+args@{ pkgs, ... }:
+
 {
-  home.packages = [ pkgs.starship ];
+  home.packages = [ args.pkgs.starship ];
   programs.fish.functions.starship_transient_prompt_func.body = "starship module character";
   programs.starship = {
     enable = true;
@@ -9,7 +10,7 @@ extras@{ pkgs, ... }:
       # based off of tokyo night preset
       # i wrote this inside the toml file with a `echo "/home/mochie/.config/starship.toml" | entr -c -s "starship prompt"`
       # open side by side, i'm not THAT insane
-      format = extras.lib.strings.concatStrings [
+      format = args.lib.strings.concatStrings [
         "[](fg:#212736)"
         "[](fg:#394260 bg:#212736)"
         "[ $username$hostname](bg:#394260 fg:#7aa2f7)"

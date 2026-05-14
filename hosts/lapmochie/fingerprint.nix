@@ -1,4 +1,4 @@
-{ lib, ... }:
+args@{ pkgs, ... }:
 
 /*
   ok so basically i want to only enable fingerprint auth for the things i want (whitelist),
@@ -17,12 +17,12 @@
 */
 
 {
-  options.security.pam.services = lib.mkOption {
-    type = lib.types.attrsOf (
-      lib.types.submodule {
+  options.security.pam.services = args.lib.mkOption {
+    type = args.lib.types.attrsOf (
+      args.lib.types.submodule {
         config = {
-          fprintAuth = lib.mkDefault false;
-          rules.auth.fprintd.order = lib.mkForce 32768;
+          fprintAuth = args.lib.mkDefault false;
+          rules.auth.fprintd.order = args.lib.mkForce 32768;
         };
       }
     );
@@ -45,8 +45,8 @@
         login = cfgThing;
         sddm = cfgThing;
         sddm-greeter = cfgThing;
-        kde = lib.mkForce cfgThing;
-        kde-fingerprint = lib.mkForce cfgThing;
+        kde = args.lib.mkForce cfgThing;
+        kde-fingerprint = args.lib.mkForce cfgThing;
       };
   };
 }

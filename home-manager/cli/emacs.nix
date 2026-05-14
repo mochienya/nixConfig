@@ -1,8 +1,8 @@
-extras@{ pkgs, ... }:
+args@{ pkgs, ... }:
 
 {
-  home.packages = with pkgs; [
-    ((pkgs.emacsPackagesFor emacs-git-pgtk).emacsWithPackages (epkgs: with epkgs; [vterm]))
+  home.packages = with args.pkgs; [
+    ((args.pkgs.emacsPackagesFor emacs-git-pgtk).emacsWithPackages (epkgs: with epkgs; [vterm]))
     coreutils-full
     emacs-lsp-booster
     clang

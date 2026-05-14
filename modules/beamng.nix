@@ -1,12 +1,12 @@
-{ pkgs, ... }:
+args@{ pkgs, ... }:
 
 {
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with args.pkgs; [
     beammp-launcher
     (
       let
         libraryPath =
-          with pkgs;
+          with args.pkgs;
           lib.makeLibraryPath [
             fontconfig
             freetype
@@ -34,8 +34,8 @@
           ];
       in
       # to be executed by steam launch args
-      pkgs.writeScriptBin "launch-beamng" ''
-        #!/usr/bin/env ${pkgs.lib.getExe pkgs.bash}
+      args.pkgs.writeScriptBin "launch-beamng" ''
+        #!/usr/bin/env ${args.lib.getExe args.pkgs.bash}
 
         set -euo pipefail
 

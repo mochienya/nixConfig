@@ -1,4 +1,5 @@
-extras@{ pkgs, ... }:
+args@{ pkgs, ... }:
+
 {
   home.shell.enableFishIntegration = true;
   programs.fish = {
@@ -29,9 +30,9 @@ extras@{ pkgs, ... }:
     preferAbbrs = false;
     shellAliases = {
       ls = "eza -1 -l -a -F --color=always --icons --no-permissions --no-user --no-time";
-      nrbs = "nh os switch ~/nixConfig -H ${extras.host}";
+      nrbs = "nh os switch ~/nixConfig -H ${args.host}";
       nfu = "nix flake update";
-      udrbsd = "nh os boot ~/nixConfig -uH ${extras.host} && sudo shutdown now";
+      udrbsd = "nh os boot ~/nixConfig -uH ${args.host} && sudo shutdown now";
     };
     shellAbbrs = {
       bgs = {
@@ -39,7 +40,7 @@ extras@{ pkgs, ... }:
         position = "anywhere";
       };
     };
-    plugins = with pkgs.fishPlugins; [
+    plugins = with args.pkgs.fishPlugins; [
       {
         name = "autopair";
         src = autopair.src;
