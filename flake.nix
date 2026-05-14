@@ -52,6 +52,12 @@
         };
         overlays = with inputs; [
           emacs-overlay.overlays.default
+          # remove when closed https://github.com/NixOS/nixpkgs/issues/513245
+          (_: prev: {
+            openldap = prev.openldap.overrideAttrs {
+              doCheck = !prev.stdenv.hostPlatform.isi686;
+            };
+          })
         ];
       };
     in
