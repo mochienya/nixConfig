@@ -89,4 +89,9 @@ args@{ pkgs, ... }:
       };
     };
   };
+
+  services.sunshine = {
+    enable = true;
+    package = args.pkgs.sunshine.override { cudaSupport = true; };
+  };
 }

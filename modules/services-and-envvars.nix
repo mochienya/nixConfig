@@ -32,6 +32,9 @@ args@{ pkgs, ... }:
     '';
   };
 
+  # access to some nerd's server
+  services.tailscale.enable = true;
+
   # fixes unicode support
   home-manager.users.mochie.home.file.".XCompose".source = "${args.pkgs.keyd}/share/keyd/keyd.compose";
   services.keyd = {
