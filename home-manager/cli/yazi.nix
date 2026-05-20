@@ -86,15 +86,6 @@ args@{ pkgs, ... }:
     };
   };
 
-  xdg.portal = {
-    enable = true;
-    extraPortals = with args.pkgs; [
-      xdg-desktop-portal-termfilechooser
-    ];
-    config.common = {
-      "org.freedesktop.impl.portal.FileChooser" = "termfilechooser";
-    };
-  };
   home.sessionVariables = {
     GTK_USE_PORTAL = "1";
   };

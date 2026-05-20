@@ -12,6 +12,20 @@ args@{ pkgs, ... }:
     enable = true;
   };
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = with args.pkgs; [
+      xdg-desktop-portal-termfilechooser
+      # xdg-desktop-portal-gtk
+    ];
+    config.common = {
+      "org.freedesktop.impl.portal.FileChooser" = "termfilechooser";
+      "org.freedesktop.impl.portal.ScreenCast" = "hyprland";
+      default = [ "hyprland" "gtk" ];
+    };
+  };
+  
+
   home-manager.users.mochie =
     { config, ... }:
     {
