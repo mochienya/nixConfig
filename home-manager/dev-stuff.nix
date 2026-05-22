@@ -6,6 +6,7 @@ args@{ pkgs, ... }:
     micro
     vscode
     nixd
+    lua-language-server
     pnpm
     nodejs_latest
     bun

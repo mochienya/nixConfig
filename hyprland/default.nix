@@ -33,8 +33,8 @@ args@{ pkgs, ... }:
         source = config.lib.file.mkOutOfStoreSymlink /home/mochie/nixConfig/hyprland/main;
         recursive = true;
       };
-      xdg.configFile."hypr-host/host.conf".source =
-        config.lib.file.mkOutOfStoreSymlink /home/mochie/nixConfig/hyprland/${args.host}.conf;
+      xdg.configFile."hypr-host/host.lua".source =
+        config.lib.file.mkOutOfStoreSymlink /home/mochie/nixConfig/hyprland/${args.host}.lua;
     };
 
   services.displayManager.ly.enable = true;
