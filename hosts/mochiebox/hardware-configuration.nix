@@ -20,7 +20,13 @@ args@{ pkgs, ... }:
     extraModulePackages = [ ];
   };
 
+  environment.systemPackages = with args.pkgs; [
+    v4l-utils
+  ];
 
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="video4linux", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="085c", RUN+="${args.pkgs.v4l-utils}/bin/v4l2-ctl -d $devnode --set-ctrl=power_line_frequency=1"
+  '';
 
   nixpkgs.hostPlatform = "x86_64-linux";
   hardware.cpu.amd = {
