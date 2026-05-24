@@ -88,6 +88,11 @@ args@{ pkgs, ... }:
   };
   security.sudo.wheelNeedsPassword = false;
 
+  # stop mouse from waking up my pc (i just need to breathe on it for it to register)
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c0a0", ATTR{power/wakeup}="disabled"
+  '';
+
   environment.systemPackages = with args.pkgs; [
     git
     ffmpeg-full
