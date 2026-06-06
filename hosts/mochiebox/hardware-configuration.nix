@@ -38,6 +38,9 @@ args@{ pkgs, ... }:
   '';
 
   nixpkgs.hostPlatform = "x86_64-linux";
+
+  hardware.enableRedistributableFirmware = true;
+
   hardware.cpu.amd = {
     ryzen-smu.enable = true;
     updateMicrocode = true;

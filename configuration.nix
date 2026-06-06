@@ -29,33 +29,14 @@ args@{ pkgs, ... }:
   networking.firewall.enable = false; # i HATE security!!!
   networking.enableIPv6 = false;
 
+  services.resolved.enable = true;
+
   networking.nameservers = [
     "1.1.1.1"
-    "8.8.8.8"
     "1.0.0.1"
+    "8.8.8.8"
     "8.8.4.4"
   ];
-
-  boot.kernelModules = [ "tcp_bbr" ];
-  boot.kernel.sysctl = {
-    "net.ipv4.tcp_congestion_control" = "bbr";
-    "net.core.default_qdisc" = "fq";
-    "net.core.rmem_max" = 4194304;
-    "net.core.wmem_max" = 4194304;
-    "net.core.somaxconn" = 4096;
-  };
-
-  services.resolved = {
-    enable = true;
-    settings.Resolve = {
-      DNSSEC = "true";
-      Domains = [ "~." ];
-      FallbackDNS = [
-        "1.1.1.1"
-        "1.0.0.1"
-      ];
-    };
-  };
 
   networking.timeServers = [
     "0.pool.ntp.org"
