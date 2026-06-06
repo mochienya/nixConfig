@@ -24,6 +24,15 @@ args@{ pkgs, ... }:
     v4l-utils
   ];
 
+  programs.obs-studio = {
+    enable = true;
+    enableVirtualCamera = true;
+    package = args.options.programs.obs-studio.package.default.override { cudaSupport = true; };
+    plugins = with args.pkgs.obs-studio-plugins; [
+      obs-pipewire-audio-capture
+    ];
+  };
+
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="video4linux", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="085c", RUN+="${args.pkgs.v4l-utils}/bin/v4l2-ctl -d $devnode --set-ctrl=power_line_frequency=1"
   '';
