@@ -4,6 +4,7 @@ args@{ pkgs, ... }:
   imports = [
     ./gpu.nix
     ./fs.nix
+    ./audio.nix
   ];
 
   boot = {
