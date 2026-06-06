@@ -22,6 +22,7 @@ args@{ pkgs, ... }:
     ayugram-desktop
     nh
     gimp3
+    mumble
     args.inputs.zen-browser.packages."${args.pkgs.stdenv.hostPlatform.system}".twilight
     (
       (args.pkgs.discord.override (old: {
