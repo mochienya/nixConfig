@@ -1,30 +1,29 @@
 args@{ pkgs, ... }:
 
 {
-  nix.settings = {
-    auto-optimise-store = true;
-    trusted-users = [ "mochie" ];
-    substituters = [
-      "https://cache.nixos.org"
-      "https://nix-community.cachix.org"
-    ];
-    trusted-public-keys = [
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-    ];
+  nix.settings =
+    let
+      flakeConfAttrs = (import ../flake.nix).nixConfig;
+    in
+    {
+      auto-optimise-store = true;
+      trusted-users = [ "mochie" ];
+      substituters = flakeConfAttrs.extra-substituters;
+      trusted-public-keys = flakeConfAttrs.extra-trusted-public-keys;
 
-    experimental-features = [
-      "nix-command"
-      "flakes"
-      "pipe-operators"
-    ];
-    # unlimited
-    http-connections = 0;
-    max-jobs = "auto";
-    max-substitution-jobs = 128;
-    download-buffer-size = 524288000;
+      experimental-features = [
+        "nix-command"
+        "flakes"
+        "pipe-operators"
+      ];
+      # unlimited
+      http-connections = 0;
+      max-jobs = "auto";
+      max-substitution-jobs = 128;
+      download-buffer-size = 524288000;
 
-    warn-dirty = false;
-  };
+      warn-dirty = false;
+    };
 
   nix.registry.master = {
     from = {
