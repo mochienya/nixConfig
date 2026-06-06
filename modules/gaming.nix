@@ -49,7 +49,6 @@ args@{ pkgs, ... }:
       ]);
     };
   };
-  programs.gamescope.capSysNice = true;
 
   services.flatpak = {
     enable = true;
