@@ -11,6 +11,7 @@
     # niri still doesn't support enough features for me to use it and i don't feel like learning freedesktop nonsense
     # sorry sweaty...
     hyprland.url = "github:hyprwm/Hyprland";
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
     copyparty = {
       url = "github:9001/copyparty";

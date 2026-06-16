@@ -7,8 +7,6 @@ args@{ pkgs, ... }:
     ./hyprland
   ];
 
-  boot.kernelPackages = args.pkgs.linuxPackages_zen;
-
   boot.loader = {
     systemd-boot.enable = false;
     efi.canTouchEfiVariables = true;

@@ -23,6 +23,8 @@ args@{ pkgs, ... }:
   ];
   boot.extraModulePackages = [ ];
 
+  boot.kernelPackages = args.pkgs.linuxPackagesFor args.inputs.nix-cachyos-kernel.packages.${args.pkgs.stdenv.hostPlatform.system}.linux-cachyos-latest-lto-x86_64-v4;
+
   # windows partition owo
   boot.supportedFilesystems = [ "ntfs" ];
   fileSystems."/mnt/windows" = {

@@ -21,6 +21,8 @@ args@{ pkgs, ... }:
     extraModulePackages = [ ];
   };
 
+  boot.kernelPackages = args.pkgs.linuxPackagesFor args.inputs.nix-cachyos-kernel.packages.${args.pkgs.stdenv.hostPlatform.system}.linux-cachyos-latest-lto-x86_64-v3;
+
   environment.systemPackages = with args.pkgs; [
     v4l-utils
   ];
