@@ -5,6 +5,7 @@ args@{ pkgs, ... }:
     ./gpu.nix
     ./fs.nix
     ./audio.nix
+    ./vr.nix
   ];
 
   boot = {
