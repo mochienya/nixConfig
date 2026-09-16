@@ -40,7 +40,12 @@ args@{ pkgs, ... }:
   services.keyd = {
     enable = true;
     keyboards.default = {
-      ids = [ "*" ];
+      ids = [
+        "*"
+        # fixes keyd fucking up my mouse sensitivity sometimes
+        "-046d:40b8"
+        "-046d:c0a0"
+      ];
       settings = {
         main = {
           capslock = "escape";

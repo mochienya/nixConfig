@@ -51,6 +51,7 @@ hl.config {
   }
   hl.device(utils.merge_tables(base, { name = "logitech-usb-receiver" }))
   hl.device(utils.merge_tables(base, { name = "logitech-pro-x-2-dex"  }))
+  hl.device(utils.merge_tables(base, { name = "logitech-pro-x-2-dex-1"  }))
 end)()
 
 hl.monitor {
