@@ -62,6 +62,8 @@ args@{ pkgs, ... }:
       "networkmanager"
       "wheel"
       "gamemode"
+      "input"
+      "video"
     ];
     shell = args.pkgs.fish;
   };
@@ -69,7 +71,7 @@ args@{ pkgs, ... }:
 
   # stop mouse from waking up my pc (i just need to breathe on it for it to register)
   services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c0a0", ATTR{power/wakeup}="disabled"
+    ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="046d", ATTR{idProduct}=="c0a0", ATTR{power/wakeup}="disabled"
   '';
 
   environment.systemPackages = with args.pkgs; [

@@ -30,6 +30,7 @@ args@{ pkgs, ... }:
         withEquicord = true;
         withTTS = false;
         enableAutoscroll = true;
+        useFHSEnv = false;
       })).overrideAttrs
       (old: {
         # it's sometimes that shrimple..

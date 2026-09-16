@@ -34,7 +34,7 @@ args@{ pkgs, ... }:
         what-size = mkPlugin {
           author = "pirafrank";
           repo = "what-size.yazi";
-          hash = "sha256-7q/45TopqbojNRvYDmP9+hgSGPmiyLHBcV051qpOB2Y=";
+          hash = "sha256-ZCRxs7KecMgu5tSqQoKCPIELSI2X2SAOeYG6Ct6gTBo=";
         };
       };
     keymap = {
@@ -50,7 +50,7 @@ args@{ pkgs, ... }:
             "C" = "plugin ouch";
             "<C-y>" = "plugin wl-clipboard";
             "<C-s>" = "plugin what-size";
-            "b" = ''shell -- ripdrag --and-exit --no-click --all-compact "$@"'';
+            "b" = ''shell -- ${args.lib.getExe args.pkgs.ripdrag} --and-exit --no-click --all-compact %s'';
           };
     };
     settings = {
@@ -76,7 +76,7 @@ args@{ pkgs, ... }:
       opener.extract = [
         {
           run = ''
-            for file; do
+            for file in %s; do
               ${args.lib.getExe args.pkgs.ouch} decompress "$file" --yes &
             done
             wait

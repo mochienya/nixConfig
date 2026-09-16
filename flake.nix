@@ -12,6 +12,7 @@
     # sorry sweaty...
     hyprland.url = "github:hyprwm/Hyprland";
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+    nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
 
     copyparty = {
       url = "github:9001/copyparty";
@@ -37,7 +38,7 @@
       "https://hyprland.cachix.org"
       "https://nix-community.cachix.org"
       "https://cache.nixos-cuda.org"
-      "https://attic.xuyh0120.win/lantian"
+      # "https://attic.xuyh0120.win/lantian"
     ];
     extra-trusted-public-keys = [
       "yazi.cachix.org-1:Dcdz63NZKfvUCbDGngQDAZq6kOroIrFoyO064uvLh8k="
@@ -61,6 +62,9 @@
           emacs-overlay.overlays.default
           hyprland.overlays.hyprland-packages
           hyprland.overlays.hyprland-extras
+          (_: prev: {
+            ouch = prev.ouch.override { enableUnfree = true; };
+          })
         ];
       };
     in
@@ -80,6 +84,7 @@
             inputs.nix-flatpak.nixosModules.nix-flatpak
             inputs.hyprland.nixosModules.default
             inputs.home-manager.nixosModules.home-manager
+            inputs.nixpkgs-xr.nixosModules.nixpkgs-xr
             {
               home-manager = {
                 extraSpecialArgs = specialArgs;
