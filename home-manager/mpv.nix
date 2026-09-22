@@ -46,6 +46,9 @@ args@{ pkgs, ... }:
       l = "add chapter 1";
       q = "quit watch-later";
       Q = "quit";
+      "," = "playlist-prev";
+      "." = "playlist-next weak";
+      "/" = "script-binding select/select-playlist";
       y = "script-binding seek_end";
       "`" = "script-binding commands/open";
       k = "script-binding stats/display-stats-toggle";
