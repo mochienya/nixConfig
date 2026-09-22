@@ -8,6 +8,9 @@ args@{ pkgs, ... }:
       input-default-bindings = false;
       input-builtin-bindings = false;
 
+      write-filename-in-watch-later-config = true;
+      save-watch-history = true;
+
       sub-font = "Nunito";
       sub-outline-color = "0.0/0.3";
       sub-border-style = "opaque-box";
@@ -41,6 +44,8 @@ args@{ pkgs, ... }:
       m = "cycle mute";
       j = "add chapter -1";
       l = "add chapter 1";
+      q = "quit watch-later";
+      Q = "quit";
       y = "script-binding seek_end";
       "`" = "script-binding commands/open";
       k = "script-binding stats/display-stats-toggle";
