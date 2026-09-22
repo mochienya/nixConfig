@@ -60,7 +60,7 @@ args@{ pkgs, ... }:
     scripts =
       with args.pkgs.mpvScripts;
       [
-        mpv-osc-tethys
+        modernz
         thumbfast
       ]
       ++ (
@@ -91,5 +91,29 @@ args@{ pkgs, ... }:
           '')
         ]
       );
+    scriptOpts = {
+      modernz = {
+        deadzonesize = "0.0";
+        title = "\${filename} | \${media-title}";
+        cache_info = "yes";
+        window_controls = "no";
+        jump_buttons = "no";
+        track_nextprev_buttons = "no";
+        hide_empty_playlist_button = "yes";
+        fullscreen_button = "no";
+        screenshot_button = "no";
+        download_button = "no";
+        loop_button = "no";
+        zoom_in_max = 8;
+
+        seekbarfg_color = "#4270ff";
+        seek_handle_color = "#294fdc";
+        seek_handle_border_color = "#4270ff";
+        volumebar_match_seek_color = "yes";
+        held_element_color = "#999999";
+        hover_effect_color = "#4270ff";
+        nibble_color = "#4270ff";
+      };
+    };
   };
 }
